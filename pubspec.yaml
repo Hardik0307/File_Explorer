@@ -25,7 +25,13 @@ dependencies:
   cupertino_icons: ^0.1.2
   file_picker : ^1.4.3
   logger: ^0.8.1
+  flutter_file_manager: ^0.2.0
+  open_file: ^2.1.1 
   share: ^0.6.3+5
+  flutter_statusbarcolor: ^0.2.3
+  simple_permissions: ^0.1.9
+
+
 
 
 
