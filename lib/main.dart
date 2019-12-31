@@ -3,7 +3,7 @@ import 'package:logger/logger.dart';
 import 'package:flutter_file_manager/flutter_file_manager.dart';
 import 'package:open_file/open_file.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import 'package:simple_permissions/simple_permissions.dart';
+//import 'package:simple_permissions/simple_permissions.dart';
 
 
 var logger = Logger(
