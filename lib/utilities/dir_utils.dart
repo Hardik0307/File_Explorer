@@ -102,7 +102,6 @@ Future<int> getFreeSpace(String path) async {
 }
 
 /// Create folder by path
-/// * i.e: `.createFolderByPath("/storage/emulated/0/", "folder name" )`
 Future<Directory> createFolderByPath(String path, String folderName) async {
   stdout.writeln("Create folder path :  $folderName @ $path");
   var _directory = Directory(p.join(path, folderName));
