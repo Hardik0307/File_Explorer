@@ -78,13 +78,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
-  file_picker:
-    dependency: "direct main"
-    description:
-      name: file_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.4.3+2"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -96,7 +89,7 @@ packages:
       name: flutter_file_manager
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.0"
+    version: "0.1.1"
   flutter_launcher_icons:
     dependency: "direct main"
     description:
@@ -128,13 +121,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4"
-  logger:
-    dependency: "direct main"
-    description:
-      name: logger
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.8.1"
   matcher:
     dependency: transitive
     description:
