@@ -32,10 +32,6 @@ class FolderWidget extends StatelessWidget {
       },
       child:
           Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        // Icon(
-        //  Icons.folder,
-        //   size: 50.0,
-        // ),
            Image.asset(
               "assets/foldericon1.png",
            width: 50,
