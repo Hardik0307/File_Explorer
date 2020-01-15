@@ -1,5 +1,4 @@
 // framework
-// import 'package:basic_file_manager/screens/storage_screen.dart';
 import 'package:flutter/material.dart';
 
 // packages
@@ -9,10 +8,9 @@ import 'package:path/path.dart' as pathlib;
 
 // app files
 import 'package:file_explorer/notifiers/core.dart';
-// import 'package:basic_file_manager/ui/widgets/appbar_popup_menu.dart';
-// import 'package:basic_file_manager/ui/widgets/search.dart';
+import 'package:file_explorer/views/popup_menu.dart';
+import 'package:file_explorer/views/search.dart';
 import 'package:file_explorer/notifiers/preferences.dart';
-// import 'package:basic_file_manager/ui/widgets/create_dialog.dart';
 import 'package:file_explorer/views/file.dart';
 import 'package:file_explorer/models/file.dart';
 import 'package:file_explorer/models/folder.dart';
@@ -67,20 +65,20 @@ class _FolderListScreenState extends State<FolderListScreen>
               }
             }),
             actions: <Widget>[
-              // IconButton(
-              //   // Go home
-              //   onPressed: () {
-              //     Navigator.popUntil(
-              //         context, ModalRoute.withName(Navigator.defaultRouteName));
-              //   },
-              //   icon: Icon(Icons.home),
-              // ),
-              // IconButton(
-              //   icon: Icon(Icons.search),
-              //   onPressed: () => showSearch(
-              //       context: context, delegate: Search(path: widget.path)),
-              // ),
-              //Here is three dots //AppBarPopupMenu(path: widget.path)
+              IconButton(
+                 // Go home
+                 onPressed: () {
+                   Navigator.popUntil(
+                       context, ModalRoute.withName(Navigator.defaultRouteName));
+                 },
+                 icon: Icon(Icons.home),
+               ),
+               IconButton(
+                 icon: Icon(Icons.search),
+                 onPressed: () => showSearch(
+                     context: context, delegate: Search(path: widget.path)),
+               ),
+              AppBarPopupMenu(path: widget.path)
             ]),
         body: RefreshIndicator(
           onRefresh: () {
@@ -192,16 +190,7 @@ class FolderFloatingActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // if (enabled == true) {
-    //   return FloatingActionButton(
-    //     tooltip: "Create Folder",
-    //     shape: RoundedRectangleBorder(
-    //         borderRadius: BorderRadius.all(Radius.circular(16.0))),
-    //     child: Icon(Icons.add),
-    //     onPressed: () => showDialog(
-    //         context: context, builder: (context) => CreateFolderDialog()),
-    //   );
-    // } else
+    //folder creation
      return Container(
         width: 0.0,
         height: 0.0,
