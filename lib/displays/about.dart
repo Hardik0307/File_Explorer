@@ -1,10 +1,5 @@
 // framework
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-// packages
-import 'package:url_launcher/url_launcher.dart';
-
 class AboutScreen extends StatefulWidget {
   @override
   _AboutScreenState createState() => _AboutScreenState();

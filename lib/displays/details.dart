@@ -16,7 +16,7 @@ class DetailScreen extends StatelessWidget {
       ),
       body: FutureBuilder<Map>(
         future: FileManager.fileDetails(
-            path), // a previously-obtained Future<String> or null
+            path),
         builder: (BuildContext context, AsyncSnapshot<Map> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -28,7 +28,7 @@ class DetailScreen extends StatelessWidget {
               if (snapshot.hasError) return Text('Error: ${snapshot.error}');
               return ListView(children: _detailWidgets(snapshot.data));
           }
-          return null; // unreachable
+          return null;
         },
       ),
     );
