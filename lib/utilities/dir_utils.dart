@@ -95,6 +95,20 @@ Future<List<dynamic>> search(dynamic path, String query,
   return files;
 }
 
+Future<List<dynamic>> searchAll(dynamic path, String query,
+    {bool matchCase: false, recursive: true, bool hidden: false}) async {
+  int start = DateTime.now().millisecondsSinceEpoch;
+
+  List<dynamic> files =
+      await getFoldersAndFiles(path, recursive: recursive, keepHidden: hidden);
+        // ..retainWhere(
+        //     (test) => test.name.toLowerCase().contains(query.toLowerCase()));
+
+  int end = DateTime.now().millisecondsSinceEpoch;
+  stdout.writeln("Searching time : ${end - start} ms");
+  return files;
+}
+
 Future<int> getFreeSpace(String path) async {
   MethodChannel platform = const MethodChannel('samples.flutter.dev/battery');
   int freeSpace = await platform.invokeMethod("getFreeStorageSpace");

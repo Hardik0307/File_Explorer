@@ -57,7 +57,7 @@ class Search extends SearchDelegate<String> {
                   case ConnectionState.active:
                     return Text('${snapshot.data}');
                   case ConnectionState.done:
-                    return _Results(
+                    return Results(
                       results: snapshot.data,
                     );
                 }
@@ -83,12 +83,12 @@ class Search extends SearchDelegate<String> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                           CircularProgressIndicator(),
-                          Text('Searching...')
+                          Text('Search ..')
                         ]));
                   case ConnectionState.active:
                     return Text('${snapshot.data}');
                   case ConnectionState.done:
-                    return _Results(
+                    return Results(
                       results: snapshot.data,
                     );
                 }
@@ -98,8 +98,8 @@ class Search extends SearchDelegate<String> {
   }
 }
 
-class _Results extends StatelessWidget {
-  const _Results({
+class Results extends StatelessWidget {
+  const Results({
     Key key,
     @required this.results,
   }) : super(key: key);
@@ -111,10 +111,13 @@ class _Results extends StatelessWidget {
     //var coreNotifier = Provider.of<CoreNotifier>(context, listen: false);
     return ListView.builder(
       itemCount: results.length,
+      
       addAutomaticKeepAlives: true,
       key: key,
       itemBuilder: (context, index) {
         if (results[index] is MyFolder) {
+          var x = results.length;
+          print('Total Folders and files : ${x}');
           return ListTile(
             leading: Icon(Icons.folder),
             title: Text(results[index].name),

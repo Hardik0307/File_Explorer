@@ -1,4 +1,5 @@
 // framework
+import 'package:file_explorer/displays/category_display.dart';
 import 'package:flutter/material.dart';
 
 // packages
@@ -26,6 +27,8 @@ class AppBarPopupMenu extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (context) => CreateFolderDialog(path: path)) ;
+            } else if (value == "category") {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryWise()));
             } else if (value == "settings") {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => Settings()));
@@ -47,6 +50,8 @@ class AppBarPopupMenu extends StatelessWidget {
                     value: 'refresh', child: Text('Refresh')),
                 const PopupMenuItem<String>(
                     value: 'folder', child: Text('New Folder')),
+                const PopupMenuItem<String>(
+                    value: 'category', child: Text('Show Category Wise')),
                 const PopupMenuItem<String>(
                     value: 'settings', child: Text('Settings')),
                 const PopupMenuItem<String>(

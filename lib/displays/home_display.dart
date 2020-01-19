@@ -62,13 +62,17 @@ class _StorageScreenState extends State<StorageScreen> {
                              MaterialPageRoute(builder: (context) => FolderListScreen(path: snapshot.data[position].absolute.path)));
                        },
                      ),
+                    
                    );
+                 
                  },
                );
            }
            return null;  //unreachable
          },
        ),
+      
+        
     );
   }
 }
