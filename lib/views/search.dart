@@ -1,5 +1,6 @@
-// framework
+import 'package:file_explorer/views/folder.dart';
 import 'package:flutter/material.dart';
+import 'package:open_file/open_file.dart';
 
 // packages
 import 'package:provider/provider.dart';
@@ -97,7 +98,6 @@ class Search extends SearchDelegate<String> {
   }
 }
 
-// note(Naga): is the right way of doing things here?
 class _Results extends StatelessWidget {
   const _Results({
     Key key,
@@ -108,6 +108,7 @@ class _Results extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //var coreNotifier = Provider.of<CoreNotifier>(context, listen: false);
     return ListView.builder(
       itemCount: results.length,
       addAutomaticKeepAlives: true,
@@ -117,26 +118,37 @@ class _Results extends StatelessWidget {
           return ListTile(
             leading: Icon(Icons.folder),
             title: Text(results[index].name),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FolderListScreen(
-                            path: results[index].path,
-                          )));
-            },
+            onTap: () {     
+               /*Navigator.push(
+                   context,
+                   MaterialPageRoute(
+                       builder: (context) => FolderListScreen(
+                             path: results[index].path,
+                         )));
+            coreNotifier.navigateToDirectory(results[index].path);
+           */
+            print("Click on Searched folder");
+            print(results[index].path);
+            return FolderWidget(
+                                  path: results[index].path,
+                                  name: results[index].name);
+           },
           );
         } else if (results[index] is MyFile) {
           return ListTile(
             leading: Icon(Icons.image),
             title: Text(results[index].name),
-            onTap: () {},
+            onTap: () {
+              OpenFile.open(results[index].path);
+            },
           );
         } else
           return ListTile(
             leading: Icon(Icons.image),
             title: Text(results[index].name),
-            onTap: () {},
+            onTap: () {
+              OpenFile.open(results[index].path);
+            },
           );
       },
     );

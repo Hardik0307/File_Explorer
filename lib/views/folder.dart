@@ -18,9 +18,9 @@ class FolderWidget extends StatelessWidget {
         child: InkWell(
       borderRadius: BorderRadius.circular(10.0),
       onTap: () {
-        // Navigator.push(context,
-        //     MaterialPageRoute(builder: (context) => FolderListScreen(path: path)));
-        coreNotifier.navigateToDirectory(path);
+       print("Click on folder");
+       print(path);
+       coreNotifier.navigateToDirectory(path);
       },
       onLongPress: () {
         showDialog(
