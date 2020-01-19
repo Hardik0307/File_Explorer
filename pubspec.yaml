@@ -67,6 +67,10 @@ flutter:
     - assets/fileicon1.png # source: https://www.iconfinder.com/icons/285688/empty_file_icon
     - assets/details.png 
     - assets/foldericon1.png
+    - assets/docicon.png
+    - assets/imgicon.png
+    - assets/musicicon.png
+    - assets/videoicon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
