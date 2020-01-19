@@ -1,5 +1,8 @@
 //import 'package:dynamic_theme/dynamic_theme.dart';
+import 'package:file_explorer/displays/docs_display.dart';
 import 'package:file_explorer/displays/images_display.dart';
+import 'package:file_explorer/displays/audios_display.dart';
+import 'package:file_explorer/displays/video_display.dart';
 import 'package:file_explorer/notifiers/core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +56,9 @@ class CategoryWise extends StatelessWidget {
                     leading: Image.asset('assets/musicicon.png'),
                     title: Text('Audios'),
                     dense: false,
+                    onTap: (){
+                      Navigator.push(context,MaterialPageRoute(builder : (context)=> AudioDisplayScreen(path: '/storage/emulated/0/')));
+                    },
                   ),
                 ),
 
@@ -61,6 +67,9 @@ class CategoryWise extends StatelessWidget {
                     leading: Image.asset('assets/docicon.png'),
                     title: Text('Documents'),
                     dense: false,
+                    onTap: (){
+                      Navigator.push(context,MaterialPageRoute(builder : (context)=> DocsDisplayScreen(path: '/storage/emulated/0/')));
+                    },
                   ),
                 ),
 
@@ -69,6 +78,9 @@ class CategoryWise extends StatelessWidget {
                     leading: Image.asset('assets/videoicon.png'),
                     title: Text('Videos'),
                     dense: false,
+                    onTap: (){
+                      Navigator.push(context,MaterialPageRoute(builder : (context)=> VIdeoDisplayScreen(path: '/storage/emulated/0/')));
+                    },
                   ),
                 ),
 
