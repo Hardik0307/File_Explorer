@@ -3,6 +3,7 @@ import 'dart:io';
 
 // framework
 import 'package:file_explorer/notifiers/core.dart';
+import 'package:file_explorer/views/popup_menu.dart';
 import 'package:flutter/material.dart';
 
 // packages
@@ -28,7 +29,7 @@ class _StorageScreenState extends State<StorageScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text("Swift File Manager"), actions: <Widget>[
-        //AppBarPopupMenu() // Here is three dots 
+        AppBarPopupMenu() // Here is three dots 
       ]),
 
       body: FutureBuilder<List<FileSystemEntity>>(
