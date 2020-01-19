@@ -38,7 +38,7 @@ class DetailScreen extends StatelessWidget {
     List<Widget> widgets = <Widget>[];
     data.forEach((key, value) => widgets.add(ListTile(
           leading: Text(key + ": "),
-          title: Text(value.toString()),
+        title: Text(value.toString()),
         )));
     return widgets;
   }
