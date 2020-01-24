@@ -90,7 +90,7 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen>
           child: Consumer<CoreNotifier>(
             builder: (context, model, child) => FutureBuilder<List<dynamic>>(
               // This function Invoked every time user go back to the previous directory
-              future: filesystem.searchAll(
+              future: filesystem.searchFiles(
                   model.currentPath.absolute.path,
                   '',recursive: true),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -124,7 +124,7 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen>
 
                             //   // file
                           //}
-                             if (snapshot.data[index] is MyFile) {
+                             if (snapshot.data[index] is MyFile && snapshot.data[index].name !=null) {
                                
                                //print(snapshot.data[index].path);
                                String s = pathlib.extension(snapshot.data[index].path);
