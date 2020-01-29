@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // packages
 
 import 'package:flutter_file_manager/flutter_file_manager.dart';
+
 // app files
 class DetailScreen extends StatelessWidget {
   final String path;
@@ -15,8 +16,7 @@ class DetailScreen extends StatelessWidget {
         title: Text("Details"),
       ),
       body: FutureBuilder<Map>(
-        future: FileManager.fileDetails(
-            path),
+        future: FileManager.fileDetails(path),
         builder: (BuildContext context, AsyncSnapshot<Map> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -38,7 +38,7 @@ class DetailScreen extends StatelessWidget {
     List<Widget> widgets = <Widget>[];
     data.forEach((key, value) => widgets.add(ListTile(
           leading: Text(key + ": "),
-        title: Text(value.toString()),
+          title: Text(value.toString()),
         )));
     return widgets;
   }

@@ -12,81 +12,93 @@ import 'package:path/path.dart' as pathlib;
 class CategoryWise extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-     var coreNotifier = Provider.of<CoreNotifier>(context, listen: false);
+    var coreNotifier = Provider.of<CoreNotifier>(context, listen: false);
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              "Browse Category Wise",
-            ),
-            backgroundColor: Colors.blueGrey,
-            leading: BackButton(onPressed: () {
-              if (coreNotifier.currentPath.absolute.path == pathlib.separator) {
-                Navigator.popUntil(
-                    context, ModalRoute.withName(Navigator.defaultRouteName));
-              } else {
-                coreNotifier.navigateBackdward();
-              }
-            }),
+        appBar: AppBar(
+          title: Text(
+            "Browse Category Wise",
           ),
-          
-          // body: ListView(
-          //   children: [
-          //     _tile('Images', '', 'assets/imgicon.png'),
-          //     _tile('Audios', '', 'assets/musicicon.png'),
-          //     _tile('Videos', '', 'assets/videoicon.png'),
-          //     _tile('Documents', '', 'assets/docicon.png'),
-          //   ],
-          // )
-          body: ListView(
-              children: <Widget>[
-                Card(
-                  child: ListTile(
-                    leading: Image.asset('assets/imgicon.png'),
-                    title: Text('Images'),
-                    dense: false,
-                    onTap: (){
-                      Navigator.push(context,MaterialPageRoute(builder : (context)=> ImageDisplayScreen(path: '/storage/emulated/0/')));
-                    },
-                  ),
-                ),
+          backgroundColor: Colors.blueGrey,
+          leading: BackButton(onPressed: () {
+            if (coreNotifier.currentPath.absolute.path == pathlib.separator) {
+              Navigator.popUntil(
+                  context, ModalRoute.withName(Navigator.defaultRouteName));
+            } else {
+              coreNotifier.navigateBackdward();
+            }
+          }),
+        ),
 
-                Card(
-                  child: ListTile(
-                    leading: Image.asset('assets/musicicon.png'),
-                    title: Text('Audios'),
-                    dense: false,
-                    onTap: (){
-                      Navigator.push(context,MaterialPageRoute(builder : (context)=> AudioDisplayScreen(path: '/storage/emulated/0/')));
-                    },
-                  ),
-                ),
-
-                Card(
-                  child: ListTile(
-                    leading: Image.asset('assets/docicon.png'),
-                    title: Text('Documents'),
-                    dense: false,
-                    onTap: (){
-                      Navigator.push(context,MaterialPageRoute(builder : (context)=> DocsDisplayScreen(path: '/storage/emulated/0/')));
-                    },
-                  ),
-                ),
-
-                Card(
-                  child: ListTile(
-                    leading: Image.asset('assets/videoicon.png'),
-                    title: Text('Videos'),
-                    dense: false,
-                    onTap: (){
-                      Navigator.push(context,MaterialPageRoute(builder : (context)=> VIdeoDisplayScreen(path: '/storage/emulated/0/')));
-                    },
-                  ),
-                ),
-
-              ],
+        // body: ListView(
+        //   children: [
+        //     _tile('Images', '', 'assets/imgicon.png'),
+        //     _tile('Audios', '', 'assets/musicicon.png'),
+        //     _tile('Videos', '', 'assets/videoicon.png'),
+        //     _tile('Documents', '', 'assets/docicon.png'),
+        //   ],
+        // )
+        body: ListView(
+          children: <Widget>[
+            Card(
+              child: ListTile(
+                leading: Image.asset('assets/imgicon.png'),
+                title: Text('Images'),
+                dense: false,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ImageDisplayScreen(
+                              path: '/storage/emulated/0/')));
+                },
+              ),
             ),
-          ),
+            Card(
+              child: ListTile(
+                leading: Image.asset('assets/musicicon.png'),
+                title: Text('Audios'),
+                dense: false,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AudioDisplayScreen(
+                              path: '/storage/emulated/0/')));
+                },
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: Image.asset('assets/docicon.png'),
+                title: Text('Documents'),
+                dense: false,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              DocsDisplayScreen(path: '/storage/emulated/0/')));
+                },
+              ),
+            ),
+            Card(
+              child: ListTile(
+                leading: Image.asset('assets/videoicon.png'),
+                title: Text('Videos'),
+                dense: false,
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => VIdeoDisplayScreen(
+                              path: '/storage/emulated/0/')));
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

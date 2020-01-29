@@ -50,8 +50,8 @@ class AppBarPopupMenu extends StatelessWidget {
                     value: 'refresh', child: Text('Refresh')),
                 const PopupMenuItem<String>(
                     value: 'folder', child: Text('New Folder')),
-                const PopupMenuItem<String>(
-                    value: 'category', child: Text('Show Category Wise')),
+                // const PopupMenuItem<String>(
+                //     value: 'category', child: Text('Show Category Wise')),
                 const PopupMenuItem<String>(
                     value: 'settings', child: Text('Settings')),
                 const PopupMenuItem<String>(

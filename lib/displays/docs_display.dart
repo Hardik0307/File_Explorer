@@ -1,5 +1,6 @@
 // framework
 import 'package:flutter/material.dart';
+import 'package:mime_type/mime_type.dart';
 
 // packages
 import 'package:open_file/open_file.dart';
@@ -17,12 +18,12 @@ import 'package:file_explorer/utilities/dir_utils.dart' as filesystem;
 import 'package:file_explorer/views/file_folder_dialog.dart';
 
 class DocsDisplayScreen extends StatefulWidget {
-    final String path;
-    final bool home;
-    const DocsDisplayScreen({@required this.path, this.home: false})
-        : assert(path != null);
-    @override
-    _DocsDisplayScreenState createState() => _DocsDisplayScreenState();
+  final String path;
+  final bool home;
+  const DocsDisplayScreen({@required this.path, this.home: false})
+      : assert(path != null);
+  @override
+  _DocsDisplayScreenState createState() => _DocsDisplayScreenState();
 }
 
 class _DocsDisplayScreenState extends State<DocsDisplayScreen>
@@ -40,7 +41,6 @@ class _DocsDisplayScreenState extends State<DocsDisplayScreen>
     super.dispose();
   }
 
-  
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -65,31 +65,31 @@ class _DocsDisplayScreenState extends State<DocsDisplayScreen>
             }),
             actions: <Widget>[
               IconButton(
-                 // Go home
-                 onPressed: () {
-                   Navigator.popUntil(
-                       context, ModalRoute.withName(Navigator.defaultRouteName));
-                 },
-                 icon: Icon(Icons.home),
-               ),
-               IconButton(
-                 icon: Icon(Icons.search),
-                 onPressed: () => showSearch(
-                     context: context, delegate: Search(path: widget.path)),
-               ),
+                // Go home
+                onPressed: () {
+                  Navigator.popUntil(
+                      context, ModalRoute.withName(Navigator.defaultRouteName));
+                },
+                icon: Icon(Icons.home),
+              ),
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () => showSearch(
+                    context: context, delegate: Search(path: widget.path)),
+              ),
               AppBarPopupMenu(path: widget.path)
             ]),
         body: RefreshIndicator(
           onRefresh: () {
             return Future.delayed(Duration(milliseconds: 100))
                 .then((_) => setState(() {}));
-          },  
+          },
           child: Consumer<CoreNotifier>(
             builder: (context, model, child) => FutureBuilder<List<dynamic>>(
               // This function Invoked every time user go back to the previous directory
               future: filesystem.searchFiles(
-                  model.currentPath.absolute.path,
-                  '',recursive: true),
+                  model.currentPath.absolute.path, '',
+                  recursive: true),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:
@@ -112,30 +112,43 @@ class _DocsDisplayScreenState extends State<DocsDisplayScreen>
                                   crossAxisCount: 4),
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
-
-                          
-                             if (snapshot.data[index] is MyFile) {
-                               
-                               //print(snapshot.data[index].path);
-                               String s = pathlib.extension(snapshot.data[index].path);
-                               if(s == '.doc' || s == '.docx' || s == '.odt' || s == '.pdf' || s == '.xls' || s == '.ppt' || s == '.txt' || s == '.pptx'){
+                            if (snapshot.data[index] is MyFile) {
+                              //print(snapshot.data[index].path);
+                              //String s = pathlib.extension(snapshot.data[index].path);
+                              String s = mime(snapshot.data[index].path);
+                              if (s == 'application/msword' ||
+                                  s ==
+                                      'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+                                  s == 'application/json' ||
+                                  s ==
+                                      'application/vnd.oasis.opendocument.text' ||
+                                  s ==
+                                      'application/vnd.oasis.opendocument.spreadsheet' ||
+                                  s ==
+                                      'application/vnd.oasis.opendocument.presentation' ||
+                                  s == 'application/pdf' ||
+                                  s == 'application/vnd.ms-powerpoint' ||
+                                  s == 'application/x-rar-compressed ' ||
+                                  s == 'application/x-tar' ||
+                                  s == 'application/zip' ||
+                                  s == 'application/x-7z-compressed') {
                                 return FileWidget(
-                                name: snapshot.data[index].name,
-                                onTap: () {
-                                  _printFuture(
-                                      OpenFile.open(snapshot.data[index].path));
-                                },
-                                onLongPress: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => FileContextDialog(
-                                            path: snapshot.data[index].path,
-                                            name: snapshot.data[index].name,
-                                          ));
-                                },
-                              );
+                                  name: snapshot.data[index].name,
+                                  onTap: () {
+                                    _printFuture(OpenFile.open(
+                                        snapshot.data[index].path));
+                                  },
+                                  onLongPress: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => FileContextDialog(
+                                              path: snapshot.data[index].path,
+                                              name: snapshot.data[index].name,
+                                            ));
+                                  },
+                                );
+                              }
                             }
-                             }
                             return Container();
                           });
                     } else {
@@ -190,9 +203,9 @@ class FolderFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //folder creation
-     return Container(
-        width: 0.0,
-        height: 0.0,
-      );
+    return Container(
+      width: 0.0,
+      height: 0.0,
+    );
   }
 }

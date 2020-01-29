@@ -52,55 +52,68 @@ class _FolderListScreenState extends State<FolderListScreen>
     var coreNotifier = Provider.of<CoreNotifier>(context);
 
     return Scaffold(
-      drawer: new Drawer(
-          child:new ListView(
-            children: <Widget>
-            [
-                new UserAccountsDrawerHeader(
-             currentAccountPicture: new CircleAvatar(
-               //backgroundColor:defaultTargetPlatform == TargetPlatform.android?Colors.green:null,
-               backgroundColor: Colors.grey,
-               child: new Text("B"),
-               
-             ),
-
-                ),
-              new ListTile(
-                leading: Image.asset('assets/imgicon.png'),
-                    title: Text('Images'),
-                    dense: false,
-                    onTap: (){
-                      Navigator.push(context,MaterialPageRoute(builder : (context)=> ImageDisplayScreen(path: '/storage/emulated/0/')));
-                    },
-              ),
-              new ListTile(
-                leading: Image.asset('assets/musicicon.png'),
-                    title: Text('Audios'),
-                    dense: false,
-                    onTap: (){
-                      Navigator.push(context,MaterialPageRoute(builder : (context)=> AudioDisplayScreen(path: '/storage/emulated/0/')));
-                    },
-              ),
-              new ListTile(
-                leading: Image.asset('assets/docicon.png'),
-                    title: Text('Documents'),
-                    dense: false,
-                    onTap: (){
-                      Navigator.push(context,MaterialPageRoute(builder : (context)=> DocsDisplayScreen(path: '/storage/emulated/0/')));
-                    },
-              ),
-              new ListTile(
-                 leading: Image.asset('assets/videoicon.png'),
-                    title: Text('Videos'),
-                    dense: false,
-                    onTap: (){
-                      Navigator.push(context,MaterialPageRoute(builder : (context)=> VIdeoDisplayScreen(path: '/storage/emulated/0/')));
-                    },
-              )
-            ],
-          )
-        )
-        ,
+        drawer: new Drawer(
+            child: new ListView(
+          children: <Widget>[
+            new UserAccountsDrawerHeader(
+              // currentAccountPicture: new CircleAvatar(
+              //   //backgroundColor:defaultTargetPlatform == TargetPlatform.android?Colors.green:null,
+              //   backgroundColor: Colors.lime,
+              //   child: new Text("Swift Drawer"),
+              // ),
+              accountEmail: null,
+              accountName: null,
+            ),
+            new ListTile(
+              leading: Image.asset('assets/imgicon.png'),
+              title: Text('Images'),
+              dense: false,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ImageDisplayScreen(path: '/storage/emulated/0/')));
+              },
+            ),
+            new ListTile(
+              leading: Image.asset('assets/musicicon.png'),
+              title: Text('Audios'),
+              dense: false,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            AudioDisplayScreen(path: '/storage/emulated/0/')));
+              },
+            ),
+            new ListTile(
+              leading: Image.asset('assets/docicon.png'),
+              title: Text('Documents'),
+              dense: false,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            DocsDisplayScreen(path: '/storage/emulated/0/')));
+              },
+            ),
+            new ListTile(
+              leading: Image.asset('assets/videoicon.png'),
+              title: Text('Videos'),
+              dense: false,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            VIdeoDisplayScreen(path: '/storage/emulated/0/')));
+              },
+            )
+          ],
+        )),
         appBar: AppBar(
             title: Text(
               "Internal Storage",
@@ -108,21 +121,20 @@ class _FolderListScreenState extends State<FolderListScreen>
               style: TextStyle(fontSize: 14.0),
               maxLines: 3,
             ),
-            
             actions: <Widget>[
               IconButton(
-                 // Go home
-                 onPressed: () {
-                   Navigator.popUntil(
-                       context, ModalRoute.withName(Navigator.defaultRouteName));
-                 },
-                 icon: Icon(Icons.home),
-               ),
-               IconButton(
-                 icon: Icon(Icons.search),
-                 onPressed: () => showSearch(
-                     context: context, delegate: Search(path: widget.path)),
-               ),
+                // Go home
+                onPressed: () {
+                  Navigator.popUntil(
+                      context, ModalRoute.withName(Navigator.defaultRouteName));
+                },
+                icon: Icon(Icons.home),
+              ),
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () => showSearch(
+                    context: context, delegate: Search(path: widget.path)),
+              ),
               AppBarPopupMenu(path: widget.path)
             ]),
         body: RefreshIndicator(
@@ -195,7 +207,6 @@ class _FolderListScreenState extends State<FolderListScreen>
             ),
           ),
         ),
-        
 
         // check if the in app floating action button is activated in settings
         floatingActionButton: StreamBuilder<bool>(
@@ -237,9 +248,9 @@ class FolderFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //folder creation
-     return Container(
-        width: 0.0,
-        height: 0.0,
-      );
+    return Container(
+      width: 0.0,
+      height: 0.0,
+    );
   }
 }

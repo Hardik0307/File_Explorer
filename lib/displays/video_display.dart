@@ -1,5 +1,6 @@
 // framework
 import 'package:flutter/material.dart';
+import 'package:mime_type/mime_type.dart';
 
 // packages
 import 'package:open_file/open_file.dart';
@@ -17,12 +18,12 @@ import 'package:file_explorer/utilities/dir_utils.dart' as filesystem;
 import 'package:file_explorer/views/file_folder_dialog.dart';
 
 class VIdeoDisplayScreen extends StatefulWidget {
-    final String path;
-    final bool home;
-    const VIdeoDisplayScreen({@required this.path, this.home: false})
-        : assert(path != null);
-    @override
-    _VIdeoDisplayScreenState createState() => _VIdeoDisplayScreenState();
+  final String path;
+  final bool home;
+  const VIdeoDisplayScreen({@required this.path, this.home: false})
+      : assert(path != null);
+  @override
+  _VIdeoDisplayScreenState createState() => _VIdeoDisplayScreenState();
 }
 
 class _VIdeoDisplayScreenState extends State<VIdeoDisplayScreen>
@@ -40,7 +41,6 @@ class _VIdeoDisplayScreenState extends State<VIdeoDisplayScreen>
     super.dispose();
   }
 
-  
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -65,31 +65,31 @@ class _VIdeoDisplayScreenState extends State<VIdeoDisplayScreen>
             }),
             actions: <Widget>[
               IconButton(
-                 // Go home
-                 onPressed: () {
-                   Navigator.popUntil(
-                       context, ModalRoute.withName(Navigator.defaultRouteName));
-                 },
-                 icon: Icon(Icons.home),
-               ),
-               IconButton(
-                 icon: Icon(Icons.search),
-                 onPressed: () => showSearch(
-                     context: context, delegate: Search(path: widget.path)),
-               ),
+                // Go home
+                onPressed: () {
+                  Navigator.popUntil(
+                      context, ModalRoute.withName(Navigator.defaultRouteName));
+                },
+                icon: Icon(Icons.home),
+              ),
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () => showSearch(
+                    context: context, delegate: Search(path: widget.path)),
+              ),
               AppBarPopupMenu(path: widget.path)
             ]),
         body: RefreshIndicator(
           onRefresh: () {
             return Future.delayed(Duration(milliseconds: 100))
                 .then((_) => setState(() {}));
-          },  
+          },
           child: Consumer<CoreNotifier>(
             builder: (context, model, child) => FutureBuilder<List<dynamic>>(
               // This function Invoked every time user go back to the previous directory
               future: filesystem.searchFiles(
-                  model.currentPath.absolute.path,
-                  '',recursive: true),
+                  model.currentPath.absolute.path, '',
+                  recursive: true),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.none:
@@ -112,30 +112,32 @@ class _VIdeoDisplayScreenState extends State<VIdeoDisplayScreen>
                                   crossAxisCount: 4),
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
-
-                          
-                             if (snapshot.data[index] is MyFile) {
-                               
-                               //print(snapshot.data[index].path);
-                               String s = pathlib.extension(snapshot.data[index].path);
-                               if(s == '.mp4' || s == '.m4p' || s == '.flv' || s == '.avi' || s == '.wmv'){
+                            if (snapshot.data[index] is MyFile) {
+                              //print(snapshot.data[index].path);
+                              //String s = pathlib.extension(snapshot.data[index].path);
+                              String s = mime(snapshot.data[index].path);
+                              if (s == 'video/mp4' ||
+                                  s == 'video/x-flv' ||
+                                  s == 'video/3gpp' ||
+                                  s == 'video/x-msvideo' ||
+                                  s == 'video/x-ms-wmv') {
                                 return FileWidget(
-                                name: snapshot.data[index].name,
-                                onTap: () {
-                                  _printFuture(
-                                      OpenFile.open(snapshot.data[index].path));
-                                },
-                                onLongPress: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => FileContextDialog(
-                                            path: snapshot.data[index].path,
-                                            name: snapshot.data[index].name,
-                                          ));
-                                },
-                              );
+                                  name: snapshot.data[index].name,
+                                  onTap: () {
+                                    _printFuture(OpenFile.open(
+                                        snapshot.data[index].path));
+                                  },
+                                  onLongPress: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => FileContextDialog(
+                                              path: snapshot.data[index].path,
+                                              name: snapshot.data[index].name,
+                                            ));
+                                  },
+                                );
+                              }
                             }
-                             }
                             return Container();
                           });
                     } else {
@@ -190,9 +192,9 @@ class FolderFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //folder creation
-     return Container(
-        width: 0.0,
-        height: 0.0,
-      );
+    return Container(
+      width: 0.0,
+      height: 0.0,
+    );
   }
 }
