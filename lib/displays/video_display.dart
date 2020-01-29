@@ -87,7 +87,7 @@ class _VIdeoDisplayScreenState extends State<VIdeoDisplayScreen>
           child: Consumer<CoreNotifier>(
             builder: (context, model, child) => FutureBuilder<List<dynamic>>(
               // This function Invoked every time user go back to the previous directory
-              future: filesystem.searchAll(
+              future: filesystem.searchFiles(
                   model.currentPath.absolute.path,
                   '',recursive: true),
               builder: (BuildContext context, AsyncSnapshot snapshot) {

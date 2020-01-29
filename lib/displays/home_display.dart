@@ -23,16 +23,19 @@ class StorageScreen extends StatefulWidget {
 }
 
 class _StorageScreenState extends State<StorageScreen> {
+
+  
   @override
   Widget build(BuildContext context) {
     var coreNotifier = Provider.of<CoreNotifier>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(title: Text("Swift File Manager"), actions: <Widget>[
-        AppBarPopupMenu() // Here is three dots 
+        //AppBarPopupMenu() // Here is three dots 
       ]),
 
       body: FutureBuilder<List<FileSystemEntity>>(
+        
          future: getStorageList(), // a previously-obtained Future<String> or null
          builder: (BuildContext context, AsyncSnapshot<List<FileSystemEntity>> snapshot) {
            switch (snapshot.connectionState) {
@@ -50,9 +53,12 @@ class _StorageScreenState extends State<StorageScreen> {
                  itemBuilder: (context, int position){
                    return Card(
                      child: ListTile(
-                       //title: Text(snapshot.data[position].absolute.path),
-                     
-                        title: Text("Internal Storage"),
+                      // title: Text(snapshot.data[position].absolute.path),
+                      
+                      
+                        title:snapshot.data[position].absolute.path=="/storage/emulated/0/"?Text("Internal Storage"):(Text(snapshot.data[position].absolute.path.split("/")[2])),//=="/storage/emulated/1/"? Text("SD Card"):Text("OTG")),
+                       
+                    
                      
                       subtitle: Row(children: [Text("Size: ${snapshot.data[position].statSync().size}")]),
                        dense: true,

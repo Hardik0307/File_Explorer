@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
 import 'package:path/path.dart' as pathlib;
-
+import 'package:file_explorer/displays/docs_display.dart';
+import 'package:file_explorer/displays/images_display.dart';
+import 'package:file_explorer/displays/audios_display.dart';
+import 'package:file_explorer/displays/video_display.dart';
 // app files
 import 'package:file_explorer/notifiers/core.dart';
 import 'package:file_explorer/views/popup_menu.dart';
@@ -49,6 +52,55 @@ class _FolderListScreenState extends State<FolderListScreen>
     var coreNotifier = Provider.of<CoreNotifier>(context);
 
     return Scaffold(
+      drawer: new Drawer(
+          child:new ListView(
+            children: <Widget>
+            [
+                new UserAccountsDrawerHeader(
+             currentAccountPicture: new CircleAvatar(
+               //backgroundColor:defaultTargetPlatform == TargetPlatform.android?Colors.green:null,
+               backgroundColor: Colors.grey,
+               child: new Text("B"),
+               
+             ),
+
+                ),
+              new ListTile(
+                leading: Image.asset('assets/imgicon.png'),
+                    title: Text('Images'),
+                    dense: false,
+                    onTap: (){
+                      Navigator.push(context,MaterialPageRoute(builder : (context)=> ImageDisplayScreen(path: '/storage/emulated/0/')));
+                    },
+              ),
+              new ListTile(
+                leading: Image.asset('assets/musicicon.png'),
+                    title: Text('Audios'),
+                    dense: false,
+                    onTap: (){
+                      Navigator.push(context,MaterialPageRoute(builder : (context)=> AudioDisplayScreen(path: '/storage/emulated/0/')));
+                    },
+              ),
+              new ListTile(
+                leading: Image.asset('assets/docicon.png'),
+                    title: Text('Documents'),
+                    dense: false,
+                    onTap: (){
+                      Navigator.push(context,MaterialPageRoute(builder : (context)=> DocsDisplayScreen(path: '/storage/emulated/0/')));
+                    },
+              ),
+              new ListTile(
+                 leading: Image.asset('assets/videoicon.png'),
+                    title: Text('Videos'),
+                    dense: false,
+                    onTap: (){
+                      Navigator.push(context,MaterialPageRoute(builder : (context)=> VIdeoDisplayScreen(path: '/storage/emulated/0/')));
+                    },
+              )
+            ],
+          )
+        )
+        ,
         appBar: AppBar(
             title: Text(
               "Internal Storage",
@@ -56,14 +108,7 @@ class _FolderListScreenState extends State<FolderListScreen>
               style: TextStyle(fontSize: 14.0),
               maxLines: 3,
             ),
-            leading: BackButton(onPressed: () {
-              if (coreNotifier.currentPath.absolute.path == pathlib.separator) {
-                Navigator.popUntil(
-                    context, ModalRoute.withName(Navigator.defaultRouteName));
-              } else {
-                coreNotifier.navigateBackdward();
-              }
-            }),
+            
             actions: <Widget>[
               IconButton(
                  // Go home
@@ -150,6 +195,7 @@ class _FolderListScreenState extends State<FolderListScreen>
             ),
           ),
         ),
+        
 
         // check if the in app floating action button is activated in settings
         floatingActionButton: StreamBuilder<bool>(

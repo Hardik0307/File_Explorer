@@ -109,6 +109,7 @@ Future<List<dynamic>> searchAll(dynamic path, String query,
   return files;
 }
 
+
 Future<int> getFreeSpace(String path) async {
   MethodChannel platform = const MethodChannel('samples.flutter.dev/battery');
   int freeSpace = await platform.invokeMethod("getFreeStorageSpace");
@@ -129,4 +130,53 @@ Future<Directory> createFolderByPath(String path, String folderName) async {
   } catch (e) {
     throw FileSystemException(e);
   }
+}
+//--------------------------------------
+Future<List<dynamic>> getFiles(String path,
+    {changeCurrentPath: true,
+    Sorting sortedBy: Sorting.Type,
+    reverse: false,
+    recursive: false,
+    keepHidden: false}) async {
+  Directory _path = Directory(path);
+  List<dynamic> _files;
+  try {
+    _files = await _path.list(recursive: recursive).toList();
+    _files = _files.map((path) 
+    {
+    // if()
+        return MyFile(
+            name: p.split(path.absolute.path).last,
+            path: path.absolute.path,
+            type: "File");
+    }).toList();
+
+    // Removing hidden files & folders from the list
+    if (!keepHidden) 
+    {
+      stdout.writeln("Core: excluding hidden");
+      _files.removeWhere((test) {
+        return test.name.startsWith('.') == true;
+      });
+    }
+  } on FileSystemException catch (e) {
+    stdout.writeln(e);
+    return [];
+  }
+  return utils.sort(_files, sortedBy, reverse: reverse);
+}
+
+//--------------
+Future<List<dynamic>> searchFiles(dynamic path, String query,
+    {bool matchCase: false, recursive: true, bool hidden: false}) async {
+  int start = DateTime.now().millisecondsSinceEpoch;
+
+  List<dynamic> files =
+      await getFiles(path, recursive: recursive, keepHidden: hidden);
+        // ..retainWhere(
+        //     (test) => test.name.toLowerCase().contains(query.toLowerCase()));
+
+  int end = DateTime.now().millisecondsSinceEpoch;
+  stdout.writeln("Searching time : ${end - start} ms");
+  return files;
 }
