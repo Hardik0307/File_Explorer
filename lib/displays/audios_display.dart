@@ -50,8 +50,7 @@ class _AudioDisplayScreenState extends State<AudioDisplayScreen>
     return Scaffold(
         appBar: AppBar(
             title: Text(
-              "Audios File",
-              //coreNotifier.currentPath.absolute.path,
+              "Audios",
               style: TextStyle(fontSize: 14.0),
               maxLines: 3,
             ),

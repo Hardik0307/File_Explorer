@@ -53,7 +53,7 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen>
     return Scaffold(
         appBar: AppBar(
             title: Text(
-              "Internal Storage",
+              "Images",
               //coreNotifier.currentPath.absolute.path,
               style: TextStyle(fontSize: 14.0),
               maxLines: 3,
@@ -115,27 +115,18 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen>
                                   crossAxisCount: 4),
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
-                            // folder
-                            // if (snapshot.data[index] is MyFolder) {
-                            //   return FolderWidget(
-                            //       path: snapshot.data[index].path,
-                            //       name: snapshot.data[index].name);
-
-                            //   // file
-                            //}
+                           
+                             String s = mime(snapshot.data[index].path);
                             if (snapshot.data[index] is MyFile &&
-                                snapshot.data[index].name != null) {
-                              //print(snapshot.data[index].path);
-                              //String s = pathlib.extension(snapshot.data[index].path);
-                              String s = mime(snapshot.data[index].path);
-                              print(s);
-                              if (s == 'image/bmp	' ||
+                                snapshot.data[index].name != null && s!=null && (s == 'image/bmp	' ||
                                   s == 'image/cis-cod' ||
                                   s == 'image/jpeg' ||
                                   s == 'image/tiff' ||
                                   s == 'image/gif' ||
                                   s == 'image/ief' ||
-                                  s == 'image/png') {
+                                  s == 'image/png')) { 
+                              //print(s);
+                              
                                 return FileWidget(
                                   name: snapshot.data[index].name,
                                   onTap: () {
@@ -152,7 +143,7 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen>
                                   },
                                 );
                               }
-                            }
+                            
                             return Container();
                           });
                     } else {
