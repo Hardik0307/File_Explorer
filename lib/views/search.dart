@@ -108,7 +108,7 @@ class Results extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //var coreNotifier = Provider.of<CoreNotifier>(context, listen: false);
+    var coreNotifier = Provider.of<CoreNotifier>(context, listen: false);
     return ListView.builder(
       itemCount: results.length,
       
@@ -117,19 +117,19 @@ class Results extends StatelessWidget {
       itemBuilder: (context, index) {
         if (results[index] is MyFolder) {
           var x = results.length;
-          print('Total Folders and files : ${x}');
+          print('Total Folders and files : $x');
           return ListTile(
             leading: Icon(Icons.folder),
             title: Text(results[index].name),
             onTap: () {     
-               /*Navigator.push(
+               Navigator.push(
                    context,
                    MaterialPageRoute(
                        builder: (context) => FolderListScreen(
                              path: results[index].path,
                          )));
             coreNotifier.navigateToDirectory(results[index].path);
-           */
+           
             print("Click on Searched folder");
             print(results[index].path);
             return FolderWidget(
