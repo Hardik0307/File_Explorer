@@ -73,6 +73,7 @@ flutter:
     - assets/imgicon.png
     - assets/musicicon.png
     - assets/videoicon.png
+    - assets/duplicateicon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
