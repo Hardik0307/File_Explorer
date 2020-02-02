@@ -91,7 +91,7 @@ Future<List<dynamic>> search(dynamic path, String query,
   return files;
 }
 
-Future<List<dynamic>> searchAll(dynamic path, String query,
+/*Future<List<dynamic>> searchAll(dynamic path, String query,
     {bool matchCase: false, recursive: true, bool hidden: false}) async {
   int start = DateTime.now().millisecondsSinceEpoch;
 
@@ -103,7 +103,7 @@ Future<List<dynamic>> searchAll(dynamic path, String query,
   int end = DateTime.now().millisecondsSinceEpoch;
   stdout.writeln("Searching time : ${end - start} ms");
   return files;
-}
+}*/
 
 Future<int> getFreeSpace(String path) async {
   MethodChannel platform = const MethodChannel('samples.flutter.dev/battery');
@@ -135,21 +135,21 @@ Future<List<dynamic>> getFiles(String path,
     recursive: false,
     keepHidden: false}) async {
   Directory _path = Directory(path);
-  List<dynamic> _files;
+  List<dynamic> _files1;
   try {
-    _files = await _path.list(recursive: recursive).toList();
-    _files = _files.map((path) {
-      // if()
-      return MyFile(
-          name: p.split(path.absolute.path).last,
-          path: path.absolute.path,
-          type: "File");
+    _files1 = await _path.list(recursive: recursive).toList();
+    _files1 = _files1.map((path) {
+
+        return MyFile(
+            name: p.split(path.absolute.path).last,
+            path: path.absolute.path,
+            type: "File");
     }).toList();
 
     // Removing hidden files & folders from the list
     if (!keepHidden) {
       stdout.writeln("Core: excluding hidden");
-      _files.removeWhere((test) {
+      _files1.removeWhere((test) {
         return test.name.startsWith('.') == true;
       });
     }
@@ -157,7 +157,7 @@ Future<List<dynamic>> getFiles(String path,
     stdout.writeln(e);
     return [];
   }
-  return utils.sort(_files, sortedBy, reverse: reverse);
+  return utils.sort(_files1, sortedBy, reverse: reverse);
 }
 
 //--------------
@@ -167,10 +167,32 @@ Future<List<dynamic>> searchFiles(dynamic path, String query,
 
   List<dynamic> files =
       await getFiles(path, recursive: recursive, keepHidden: hidden);
-  // ..retainWhere(
-  //     (test) => test.name.toLowerCase().contains(query.toLowerCase()));
 
   int end = DateTime.now().millisecondsSinceEpoch;
   stdout.writeln("Searching time : ${end - start} ms");
   return files;
+}
+
+Future<List<dynamic>> searchDuplicateFiles(dynamic path, String query,
+    {bool matchCase: false, recursive: true, bool hidden: false}) async  {
+  int start = DateTime.now().millisecondsSinceEpoch;
+
+  List<dynamic> files =
+      await getFiles(path, recursive: recursive, keepHidden: hidden);
+
+  int end = DateTime.now().millisecondsSinceEpoch;
+  stdout.writeln("Searching time : ${end - start} ms");
+  
+  List<dynamic> files1;
+  int flag;
+  for(int i=0; i<files.length-1; i++) {
+    flag=0;
+    for(int j=0; j<files.length; j++) {
+      if(files[i] == files[j]) {
+        files1.add(files[i]);
+      }
+    }
+  }
+  
+  return files1;
 }

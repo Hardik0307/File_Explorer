@@ -1,15 +1,13 @@
 // framework
-import 'package:file_explorer/views/create_folder_dialog.dart';
+import 'package:file_explorer/models/folder.dart';
 import 'package:flutter/material.dart';
 
 // packages
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
 import 'package:path/path.dart' as pathlib;
-import 'package:file_explorer/displays/docs_display.dart';
-import 'package:file_explorer/displays/images_display.dart';
-import 'package:file_explorer/displays/audios_display.dart';
-import 'package:file_explorer/displays/video_display.dart';
+import 'package:mime_type/mime_type.dart';
+
 // app files
 import 'package:file_explorer/notifiers/core.dart';
 import 'package:file_explorer/views/popup_menu.dart';
@@ -17,25 +15,29 @@ import 'package:file_explorer/views/search.dart';
 import 'package:file_explorer/notifiers/preferences.dart';
 import 'package:file_explorer/views/file.dart';
 import 'package:file_explorer/models/file.dart';
-import 'package:file_explorer/models/folder.dart';
-import 'package:file_explorer/views/folder.dart';
 import 'package:file_explorer/utilities/dir_utils.dart' as filesystem;
 import 'package:file_explorer/views/file_folder_dialog.dart';
 
-import 'duplicate_display.dart';
-
-class FolderListScreen extends StatefulWidget {
+class DuplicateFileDisplayScreen extends StatefulWidget {
   final String path;
   final bool home;
-  const FolderListScreen({@required this.path, this.home: false})
+  const DuplicateFileDisplayScreen({@required this.path, this.home: false})
       : assert(path != null);
   @override
-  _FolderListScreenState createState() => _FolderListScreenState();
+  _DuplicateFileDisplayScreenState createState() =>
+      _DuplicateFileDisplayScreenState(
+        
+      );
 }
 
-class _FolderListScreenState extends State<FolderListScreen>
+class _DuplicateFileDisplayScreenState extends State<DuplicateFileDisplayScreen>
     with AutomaticKeepAliveClientMixin {
   ScrollController _scrollController;
+  var list_file=new List<Future>();
+  _DuplicateFileDisplayScreenState()
+  {
+      
+  }
   @override
   void initState() {
     _scrollController = ScrollController(keepScrollOffset: true);
@@ -53,89 +55,23 @@ class _FolderListScreenState extends State<FolderListScreen>
     super.build(context);
     final preferences = Provider.of<PreferencesNotifier>(context);
     var coreNotifier = Provider.of<CoreNotifier>(context);
+    var list1 = new List<String>();
 
     return Scaffold(
-        drawer: new Drawer(
-            child: new ListView(
-          children: <Widget>[
-            new UserAccountsDrawerHeader(
-              // currentAccountPicture: new CircleAvatar(
-              //   //backgroundColor:defaultTargetPlatform == TargetPlatform.android?Colors.green:null,
-              //   backgroundColor: Colors.lime,
-              //   child: new Text("Swift Drawer"),
-              // ),
-              accountEmail: null,
-              accountName: null,
-            ),
-            new ListTile(
-              leading: Image.asset('assets/imgicon.png'),
-              title: Text('Images'),
-              dense: false,
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            ImageDisplayScreen(path: '/storage/emulated/0/')));
-              },
-            ),
-            new ListTile(
-              leading: Image.asset('assets/musicicon.png'),
-              title: Text('Audios'),
-              dense: false,
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            AudioDisplayScreen(path: '/storage/emulated/0/')));
-              },
-            ),
-            new ListTile(
-              leading: Image.asset('assets/docicon.png'),
-              title: Text('Documents'),
-              dense: false,
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            DocsDisplayScreen(path: '/storage/emulated/0/')));
-              },
-            ),
-            new ListTile(
-              leading: Image.asset('assets/videoicon.png'),
-              title: Text('Videos'),
-              dense: false,
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            VIdeoDisplayScreen(path: '/storage/emulated/0/')));
-              },
-            ),
-             new ListTile(
-              leading: Image.asset('assets/duplicateicon.png'),
-              title: Text('Duplicate Files'),
-              dense: false,
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            DuplicateFileDisplayScreen(path: '/storage/emulated/0/')));
-              },
-            )
-          ],
-        )),
         appBar: AppBar(
             title: Text(
-              "Internal Storage",
-              //coreNotifier.currentPath.absolute.path,
+              "Duplicate Files",
               style: TextStyle(fontSize: 14.0),
               maxLines: 3,
             ),
+            leading: BackButton(onPressed: () {
+              if (coreNotifier.currentPath.absolute.path == pathlib.separator) {
+                Navigator.popUntil(
+                    context, ModalRoute.withName(Navigator.defaultRouteName));
+              } else {
+                coreNotifier.navigateBackdward();
+              }
+            }),
             actions: <Widget>[
               IconButton(
                 // Go home
@@ -160,11 +96,11 @@ class _FolderListScreenState extends State<FolderListScreen>
           child: Consumer<CoreNotifier>(
             builder: (context, model, child) => FutureBuilder<List<dynamic>>(
               // This function Invoked every time user go back to the previous directory
-              future: filesystem.getFoldersAndFiles(
-                  model.currentPath.absolute.path,
-                  keepHidden: preferences.hidden),
+              future: filesystem.searchFiles(
+                  model.currentPath.absolute.path, '',
+                  recursive: true),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
-                switch (snapshot.connectionState) {
+               switch (snapshot.connectionState) {
                   case ConnectionState.none:
                     return Text('Press button to start.');
                   case ConnectionState.active:
@@ -184,36 +120,53 @@ class _FolderListScreenState extends State<FolderListScreen>
                               SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 4),
                           itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            // folder
-                            if (snapshot.data[index] is MyFolder) {
-                              return FolderWidget(
-                                  path: snapshot.data[index].path,
-                                  name: snapshot.data[index].name);
-
-                              // file
-                            } else if (snapshot.data[index] is MyFile) {
-                              return FileWidget(
-                                name: snapshot.data[index].name,
-                                onTap: () {
-                                  _printFuture(
-                                      OpenFile.open(snapshot.data[index].path));
-                                },
-                                onLongPress: () {
-                                  showDialog(
+                          itemBuilder: (context, index){
+                            String s;
+                            if (snapshot.data[index] is MyFile && mime(snapshot.data[index].path) !=null) {
+                                  var list=new List<MyFile>();
+                                  var list2=new List<String>();
+                                  list.add(snapshot.data[index]);
+                                  list2.add(snapshot.data[index].name);
+                                  for(int i=index+1;i<snapshot.data.length;i++)
+                                  {
+                                        if(snapshot.data[index].name==snapshot.data[i].name)
+                                        {
+                                          list.add(snapshot.data[i]);
+                                          list2.add(snapshot.data[i].name);
+                                          snapshot.data.removeAt(i);
+                                        }
+                                  }
+                                 
+                                  if(list.length>=2)
+                                  {
+                                     print(list2);
+                                    for(int j=0;j<list.length;j++)
+                                    {
+                                      //print(list[j].name);
+                                    return FileWidget(
+                                    name: list[j].name,
+                                    onTap: () {
+                                    _printFuture(
+                                       OpenFile.open(list[j].path));
+                                    },
+                                    onLongPress: () {
+                                    showDialog(
                                       context: context,
                                       builder: (context) => FileContextDialog(
-                                            path: snapshot.data[index].path,
-                                            name: snapshot.data[index].name,
+                                            path: list[j].path,
+                                            name: list[j].name,
                                           ));
                                 },
-                              );
+                                  );
+                               
+                                    }
+                                  }
                             }
-                            return Container();
+                           return Container();
                           });
                     } else {
                       return Center(
-                        child: Text("empty directory!"),
+                        child: Text("Empty Directory!"),
                       );
                     }
                 }
@@ -262,19 +215,11 @@ class FolderFloatingActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (enabled == true) {
-      return FloatingActionButton(
-        tooltip: "Create Folder",
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16.0))),
-        child: Icon(Icons.add),
-        onPressed: () => showDialog(
-            context: context, builder: (context) => CreateFolderDialog()),
-      );
-    } else
+    //folder creation
     return Container(
       width: 0.0,
       height: 0.0,
     );
   }
+
 }
