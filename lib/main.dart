@@ -22,8 +22,6 @@ main() {
   ));
 }
 
-
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -36,15 +34,7 @@ class MyApp extends StatelessWidget {
         themedWidgetBuilder: (context, theme) {
           FlutterStatusbarcolor.setStatusBarColor(theme.primaryColor);
           return MaterialApp(
-            title: 'Flutter Demo',
-            theme: theme,
-            
-            home: StorageScreen()
-          );
+              title: 'Flutter Demo', theme: theme, home: StorageScreen());
         });
   }
 }
-
-
-
-

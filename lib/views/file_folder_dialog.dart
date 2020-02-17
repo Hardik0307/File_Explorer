@@ -118,7 +118,8 @@ class FileContextDialog extends StatelessWidget {
                   // Share option
                   SimpleDialogOption(
                     onPressed: () async {
-                      await Share.file("Sharing this file", "file"  , File(path).readAsBytesSync(), '*/*');
+                      await Share.file("Sharing this file", "file",
+                          File(path).readAsBytesSync(), '*/*');
                       Navigator.pop(context);
                     },
                     child: ListTile(
