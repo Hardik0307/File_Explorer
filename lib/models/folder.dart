@@ -1,5 +1,4 @@
-class MyFolder implements Comparable<MyFolder> 
-{
+class MyFolder implements Comparable<MyFolder> {
   final String path;
   final String name;
   bool selected;
@@ -8,14 +7,10 @@ class MyFolder implements Comparable<MyFolder>
 
   final String type;
 
-  MyFolder
-  (
-    {this.path, this.name, this.type, this.selected: false}
-  );
+  MyFolder({this.path, this.name, this.type, this.selected: false});
 
   @override
-  int compareTo(other) 
-  {
+  int compareTo(other) {
     return type.compareTo(other.type);
   }
 }

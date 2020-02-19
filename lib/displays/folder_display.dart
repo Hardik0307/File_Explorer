@@ -115,7 +115,7 @@ class _FolderListScreenState extends State<FolderListScreen>
                             VIdeoDisplayScreen(path: '/storage/emulated/0/')));
               },
             ),
-             new ListTile(
+            new ListTile(
               leading: Image.asset('assets/duplicateicon.png'),
               title: Text('Duplicate Files'),
               dense: false,
@@ -123,8 +123,8 @@ class _FolderListScreenState extends State<FolderListScreen>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            DuplicateFileDisplayScreen(path: '/storage/emulated/0/')));
+                        builder: (context) => DuplicateFileDisplayScreen(
+                            path: '/storage/emulated/0/')));
               },
             )
           ],
@@ -272,9 +272,9 @@ class FolderFloatingActionButton extends StatelessWidget {
             context: context, builder: (context) => CreateFolderDialog()),
       );
     } else
-    return Container(
-      width: 0.0,
-      height: 0.0,
-    );
+      return Container(
+        width: 0.0,
+        height: 0.0,
+      );
   }
 }

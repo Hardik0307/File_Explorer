@@ -14,11 +14,8 @@ import 'package:file_explorer/views/search.dart';
 import 'package:file_explorer/notifiers/preferences.dart';
 import 'package:file_explorer/views/file.dart';
 import 'package:file_explorer/models/file.dart';
-import 'package:file_explorer/models/folder.dart';
-import 'package:file_explorer/views/folder.dart';
 import 'package:file_explorer/utilities/dir_utils.dart' as filesystem;
 import 'package:file_explorer/views/file_folder_dialog.dart';
-import 'package:file_explorer/views/search.dart';
 
 class ImageDisplayScreen extends StatefulWidget {
   final String path;
@@ -115,35 +112,36 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen>
                                   crossAxisCount: 4),
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
-                           
-                             String s = mime(snapshot.data[index].path);
+                            String s = mime(snapshot.data[index].path);
                             if (snapshot.data[index] is MyFile &&
-                                snapshot.data[index].name != null && s!=null && (s == 'image/bmp	' ||
-                                  s == 'image/cis-cod' ||
-                                  s == 'image/jpeg' ||
-                                  s == 'image/tiff' ||
-                                  s == 'image/gif' ||
-                                  s == 'image/ief' ||
-                                  s == 'image/png')) { 
+                                snapshot.data[index].name != null &&
+                                s != null &&
+                                (s == 'image/bmp	' ||
+                                    s == 'image/cis-cod' ||
+                                    s == 'image/jpeg' ||
+                                    s == 'image/tiff' ||
+                                    s == 'image/gif' ||
+                                    s == 'image/ief' ||
+                                    s == 'image/png')) {
                               //print(s);
-                              
-                                return FileWidget(
-                                  name: snapshot.data[index].name,
-                                  onTap: () {
-                                    _printFuture(OpenFile.open(
-                                        snapshot.data[index].path));
-                                  },
-                                  onLongPress: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) => FileContextDialog(
-                                              path: snapshot.data[index].path,
-                                              name: snapshot.data[index].name,
-                                            ));
-                                  },
-                                );
-                              }
-                            
+
+                              return FileWidget(
+                                name: snapshot.data[index].name,
+                                onTap: () {
+                                  _printFuture(
+                                      OpenFile.open(snapshot.data[index].path));
+                                },
+                                onLongPress: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => FileContextDialog(
+                                            path: snapshot.data[index].path,
+                                            name: snapshot.data[index].name,
+                                          ));
+                                },
+                              );
+                            }
+
                             return Container();
                           });
                     } else {

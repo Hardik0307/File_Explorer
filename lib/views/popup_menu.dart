@@ -17,7 +17,7 @@ class AppBarPopupMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   // print("AppBarPopupMenu(path): $path");
+    // print("AppBarPopupMenu(path): $path");
     return Consumer<CoreNotifier>(
       builder: (context, model, child) => PopupMenuButton<String>(
           onSelected: (value) {
@@ -26,9 +26,10 @@ class AppBarPopupMenu extends StatelessWidget {
             } else if (value == "folder") {
               showDialog(
                   context: context,
-                  builder: (context) => CreateFolderDialog(path: path)) ;
+                  builder: (context) => CreateFolderDialog(path: path));
             } else if (value == "category") {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryWise()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CategoryWise()));
             } else if (value == "settings") {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => Settings()));

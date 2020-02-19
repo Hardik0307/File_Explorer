@@ -139,11 +139,10 @@ Future<List<dynamic>> getFiles(String path,
   try {
     _files1 = await _path.list(recursive: recursive).toList();
     _files1 = _files1.map((path) {
-
-        return MyFile(
-            name: p.split(path.absolute.path).last,
-            path: path.absolute.path,
-            type: "File");
+      return MyFile(
+          name: p.split(path.absolute.path).last,
+          path: path.absolute.path,
+          type: "File");
     }).toList();
 
     // Removing hidden files & folders from the list
@@ -174,7 +173,7 @@ Future<List<dynamic>> searchFiles(dynamic path, String query,
 }
 
 Future<List<dynamic>> searchDuplicateFiles(dynamic path, String query,
-    {bool matchCase: false, recursive: true, bool hidden: false}) async  {
+    {bool matchCase: false, recursive: true, bool hidden: false}) async {
   int start = DateTime.now().millisecondsSinceEpoch;
 
   List<dynamic> files =
@@ -182,17 +181,17 @@ Future<List<dynamic>> searchDuplicateFiles(dynamic path, String query,
 
   int end = DateTime.now().millisecondsSinceEpoch;
   stdout.writeln("Searching time : ${end - start} ms");
-  
+
   List<dynamic> files1;
   int flag;
-  for(int i=0; i<files.length-1; i++) {
-    flag=0;
-    for(int j=0; j<files.length; j++) {
-      if(files[i] == files[j]) {
+  for (int i = 0; i < files.length - 1; i++) {
+    flag = 0;
+    for (int j = 0; j < files.length; j++) {
+      if (files[i] == files[j]) {
         files1.add(files[i]);
       }
     }
   }
-  
+
   return files1;
 }

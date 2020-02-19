@@ -111,7 +111,6 @@ class Results extends StatelessWidget {
     var coreNotifier = Provider.of<CoreNotifier>(context, listen: false);
     return ListView.builder(
       itemCount: results.length,
-      
       addAutomaticKeepAlives: true,
       key: key,
       itemBuilder: (context, index) {
@@ -121,21 +120,20 @@ class Results extends StatelessWidget {
           return ListTile(
             leading: Icon(Icons.folder),
             title: Text(results[index].name),
-            onTap: () {     
-               Navigator.push(
-                   context,
-                   MaterialPageRoute(
-                       builder: (context) => FolderListScreen(
-                             path: results[index].path,
-                         )));
-            coreNotifier.navigateToDirectory(results[index].path);
-           
-            print("Click on Searched folder");
-            print(results[index].path);
-            return FolderWidget(
-                                  path: results[index].path,
-                                  name: results[index].name);
-           },
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => FolderListScreen(
+                            path: results[index].path,
+                          )));
+              coreNotifier.navigateToDirectory(results[index].path);
+
+              print("Click on Searched folder");
+              print(results[index].path);
+              return FolderWidget(
+                  path: results[index].path, name: results[index].name);
+            },
           );
         } else if (results[index] is MyFile) {
           return ListTile(

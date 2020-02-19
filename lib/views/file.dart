@@ -1,7 +1,7 @@
 import 'package:file_explorer/views/file_folder_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
-import 'package:mime_type/mime_type.dart';
+
 class FileWidget extends StatelessWidget {
   final String path;
   final String name;
@@ -12,9 +12,9 @@ class FileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child:InkWell(
-        borderRadius: BorderRadius.circular(10.0),
-        onTap: onTap ??
+        child: InkWell(
+      borderRadius: BorderRadius.circular(10.0),
+      onTap: onTap ??
           () {
             OpenFile.open(path);
           },
@@ -29,11 +29,11 @@ class FileWidget extends StatelessWidget {
           },
       child:
           Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-         Image.asset(
-              "assets/fileicon1.png",
-           width: 50,
-           height: 50,
-         ),
+        Image.asset(
+          "assets/fileicon1.png",
+          width: 50,
+          height: 50,
+        ),
         Text(
           name,
           overflow: TextOverflow.ellipsis,

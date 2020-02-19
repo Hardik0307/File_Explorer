@@ -7,7 +7,6 @@ import 'package:path/path.dart' as p;
 import 'package:rxdart/rxdart.dart';
 import 'package:path_provider/path_provider.dart';
 
-
 import 'package:permission/permission.dart';
 
 class CoreNotifier extends ChangeNotifier {
@@ -31,7 +30,6 @@ class CoreNotifier extends ChangeNotifier {
 
   Future<void> navigateBackdward() async {
     if (_currentPath.absolute.path == p.separator) {
-      
     } else {
       _currentPath = currentPath.parent;
     }
@@ -44,8 +42,9 @@ class CoreNotifier extends ChangeNotifier {
   Future<void> initialize() async {
     //Requesting permissions if not granted
 
-    var permissions = await Permission.getPermissionsStatus([PermissionName.Storage]);
-    
+    var permissions =
+        await Permission.getPermissionsStatus([PermissionName.Storage]);
+
     if (permissions == null) {
       await Permission.requestPermissions([PermissionName.Storage]);
       notifyListeners();
@@ -58,28 +57,21 @@ class CoreNotifier extends ChangeNotifier {
 
   Future<void> delete(String path) async {
     try {
-      if (FileSystemEntity.isFileSync(path)) 
-      {
+      if (FileSystemEntity.isFileSync(path)) {
         stdout.writeln("Deleting file @ $path");
         await File(path).delete();
         notifyListeners();
-      }
-      else if (FileSystemEntity.isDirectorySync(path)) 
-      {
+      } else if (FileSystemEntity.isDirectorySync(path)) {
         stdout.writeln("Deleting folder @ $path");
         await Directory(path)
             .delete(recursive: true)
             .then((_) => notifyListeners());
-      } 
-      else if (FileSystemEntity.isFileSync(path)) 
-      {
+      } else if (FileSystemEntity.isFileSync(path)) {
         stdout.writeln("CoreNotifier->delete: $path");
         await Link(path).delete(recursive: true).then((_) => notifyListeners());
       }
       notifyListeners();
-    } 
-    catch (e) 
-    {
+    } catch (e) {
       CoreNotifierError(e.toString());
     }
   }
@@ -103,12 +95,9 @@ class CoreNotifier extends ChangeNotifier {
 
   void pasteByPath(String path) async {
     copyList.forEach((f) {
-      if (FileSystemEntity.isDirectorySync(f)) 
-      {} 
-      else if (FileSystemEntity.isFileSync(f)) 
-      {
-        try 
-        {
+      if (FileSystemEntity.isDirectorySync(f)) {
+      } else if (FileSystemEntity.isFileSync(f)) {
+        try {
           File(f).copySync(p.join(path, p.split(f).last));
         } on FileSystemException catch (e) {
           stdout.writeln(e);
@@ -121,20 +110,17 @@ class CoreNotifier extends ChangeNotifier {
     _pasteMode.add(false);
   }
 
-  void reload() 
-  {
+  void reload() {
     notifyListeners();
   }
 }
 
-class CoreNotifierError extends Error 
-{
+class CoreNotifierError extends Error {
   final String message;
   CoreNotifierError(this.message);
 
   @override
-  String toString() 
-  {
+  String toString() {
     return message;
   }
 }

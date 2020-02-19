@@ -18,9 +18,9 @@ class FolderWidget extends StatelessWidget {
         child: InkWell(
       borderRadius: BorderRadius.circular(10.0),
       onTap: () {
-       print("Click on folder");
-       print(path);
-       coreNotifier.navigateToDirectory(path);
+        print("Click on folder");
+        print(path);
+        coreNotifier.navigateToDirectory(path);
       },
       onLongPress: () {
         showDialog(
@@ -32,12 +32,11 @@ class FolderWidget extends StatelessWidget {
       },
       child:
           Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-           Image.asset(
-              "assets/foldericon1.png",
-           width: 50,
-           height: 50,
-         ),
-
+        Image.asset(
+          "assets/foldericon1.png",
+          width: 50,
+          height: 50,
+        ),
         Text(
           name,
           style: TextStyle(fontSize: 11.5),
