@@ -37,10 +37,7 @@ class _DuplicateFileDisplayScreenState extends State<DuplicateFileDisplayScreen>
   var list_file = new List<Future>();
   _DuplicateFileDisplayScreenState() {}
   @override
-  void initState() {
-    _scrollController = ScrollController(keepScrollOffset: true);
-    super.initState();
-  }
+  
 
   @override
   void dispose() {
@@ -48,13 +45,15 @@ class _DuplicateFileDisplayScreenState extends State<DuplicateFileDisplayScreen>
     super.dispose();
   }
 
+  String path = null;
+
   bool calculateMD5SumAsyncWithPlugin(String filePath, String filePath1) {
     Future<String> ret;
     Future<String> ret1;
     String x;
     String y;
 
-    ret = Md5Plugin.getMD5WithPath(filePath);
+    ret =  Md5Plugin.getMD5WithPath(filePath);
     ret.then((val) {
       print(val);
       x = val;
@@ -73,12 +72,76 @@ class _DuplicateFileDisplayScreenState extends State<DuplicateFileDisplayScreen>
     //return ret;
   }
 
+  List<ListView> la;
+  
+var d = new List<MyFile>();
+  Future convertToLists(List<MyFile> ls) async {
+    
+    Future<MyFile> m;
+    for (int k = 0; k < ls.length; k++) {
+      if (ls[k] is MyFile && mime(ls[k].path) != null) {
+        var list = new List<MyFile>();
+        var list2 = new List<String>();
+
+        list.add(ls[k]);
+        list2.add(ls[k].name);
+
+        for (int i = k + 1; i < ls.length; i++) {
+          int x = 1, y = 2;
+          String x1 = "a", y1 = "b";
+          bool exists1 = Directory(ls[k].path).existsSync();
+          bool exists2 = Directory(ls[i].path).existsSync();
+
+          if (mime(ls[k].path) != null && exists1 == false) {
+            var file = File(ls[k].path);
+            x = file.lengthSync();
+            x1 = mime(ls[k].path);
+          }
+          if (mime(ls[i].path) != null && exists2 == false) {
+            var file1 = File(ls[i].path);
+            y = file1.lengthSync();
+            y1 = mime(ls[i].path);
+          }
+          if ((x == y) &&
+              (x1 == y1) &&
+               calculateMD5SumAsyncWithPlugin(
+                  ls[k].path, ls[i].path)) // == snapshot.data[i].name)
+          {
+            setState(() {
+              
+              list.add(ls[i]);
+            list2.add(ls[i].name);
+            d.add(ls[i]);
+            
+            ls.removeAt(i);
+            });
+          }
+        }
+
+        if (list.length >= 2) {
+          setState(() {
+            d.add(list[0]);
+          });
+        }
+      }
+    }
+  //  m= Future.forEach(d, (i)=>i);
+    //print(m);
+    return d;
+  }
+
+  void initState() {
+    _scrollController = ScrollController(keepScrollOffset: true);
+    //convertToLists();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
     final preferences = Provider.of<PreferencesNotifier>(context);
     var coreNotifier = Provider.of<CoreNotifier>(context);
-    var list1 = new List<String>();
+    //var list1 = new List<String>();
 
     return Scaffold(
         appBar: AppBar(
@@ -133,84 +196,62 @@ class _DuplicateFileDisplayScreenState extends State<DuplicateFileDisplayScreen>
                     if (snapshot.hasError) {
                       return Center(child: Text('Error: ${snapshot.error}'));
                     } else if (snapshot.data.length != 0) {
-                      return GridView.builder(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          controller: _scrollController,
-                          key: PageStorageKey(widget.path),
-                          padding:
-                              EdgeInsets.only(left: 10.0, right: 10.0, top: 0),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 4),
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            String s;
-                            if (snapshot.data[index] is MyFile &&
-                                mime(snapshot.data[index].path) != null) {
-                              var list = new List<MyFile>();
-                              var list2 = new List<String>();
-                              list.add(snapshot.data[index]);
-                              list2.add(snapshot.data[index].name);
+                      
+                      return new Container(
 
-                              for (int i = index + 1;
-                                  i < snapshot.data.length;
-                                  i++) {
-                                int x = 1, y = 2;
-                                String x1 = "a", y1 = "b";
-                                bool exists1 =
-                                    Directory(snapshot.data[index].path)
-                                        .existsSync();
-                                bool exists2 = Directory(snapshot.data[i].path)
-                                    .existsSync();
-
-                                if (mime(snapshot.data[index].path) != null &&
-                                    exists1 == false) {
-                                  var file = File(snapshot.data[index].path);
-                                  x = file.lengthSync();
-                                  x1 = mime(snapshot.data[index].path);
-                                }
-                                if (mime(snapshot.data[i].path) != null &&
-                                    exists2 == false) {
-                                  var file1 = File(snapshot.data[i].path);
-                                  y = file1.lengthSync();
-                                  y1 = mime(snapshot.data[i].path);
-                                }
-                                if ((x == y) &&
-                                    (x1 == y1) &&
-                                    calculateMD5SumAsyncWithPlugin(
-                                        snapshot.data[index].path,
-                                        snapshot.data[i]
-                                            .path)) // == snapshot.data[i].name)
-                                {
-                                  list.add(snapshot.data[i]);
-                                  list2.add(snapshot.data[i].name);
-                                  snapshot.data.removeAt(i);
-                                }
-                              }
-
-                              if (list.length >= 2) {
-                                print(list2);
-                                for (int j = 0; j < list.length; j++) {
-                                  return FileWidget(
-                                    name: list[j].name,
-                                    onTap: () {
-                                      _printFuture(OpenFile.open(list[j].path));
-                                    },
-                                    onLongPress: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              FileContextDialog(
-                                                path: list[j].path,
-                                                name: list[j].name,
-                                              ));
-                                    },
-                                  );
-                                }
-                              }
-                            }
-                            return Container();
-                          });
+                        child: FutureBuilder(
+                          future:convertToLists(snapshot.data) ,
+                          builder: (BuildContext context, AsyncSnapshot snapshot1) {
+                            return ListView.builder(
+                              itemCount: snapshot1.data.length,
+                              itemBuilder: (context, index){
+                                return ListTile(
+                                  leading:Image.asset('assets/fileicon1.png'),
+                                  title: Text(snapshot1.data[index].name),
+                                onTap: () {
+                                  _printFuture(
+                                      OpenFile.open(snapshot1.data[index].path));
+                                },
+                                onLongPress: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => FileContextDialog(
+                                            path: snapshot1.data[index].path,
+                                            name: snapshot1.data[index].name,
+                                          ));
+                                },
+                              );
+                              },
+                            );
+                             
+                          },
+                        )                       
+                        
+                        
+                        
+                        /* ListView.builder(
+                            itemCount: d.length,
+                            itemBuilder: (context, index) {
+                             /* return Card (
+                                child:ListTile(
+                                leading:Image(image:AssetImage('assets/fileicon1.png')),
+                                title: Text(l[index].name),
+                                 onTap: () {
+                                  _printFuture(
+                                      OpenFile.open(snapshot.data[index].path));
+                                },
+                                onLongPress: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => FileContextDialog(
+                                            path:d[index].path,
+                                            name:d[index].name,
+                                          ));
+                                })
+                              );*/
+                              
+                            }),*/
+                      );
                     } else {
                       return Center(
                         child: Text("Empty Directory!"),

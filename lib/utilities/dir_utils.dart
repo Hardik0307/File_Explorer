@@ -7,9 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:package_info/package_info.dart';
 import 'package:path_provider/path_provider.dart';
-
+import 'package:mime_type/mime_type.dart';
 import 'package:file_explorer/utilities/sort_utils.dart' as utils;
-
+import 'package:md5_plugin/md5_plugin.dart';
 String storageRootPath = "/storage/emulated/0/";
 
 Future<List<Directory>> getStorageList() async {
@@ -195,3 +195,4 @@ Future<List<dynamic>> searchDuplicateFiles(dynamic path, String query,
 
   return files1;
 }
+
