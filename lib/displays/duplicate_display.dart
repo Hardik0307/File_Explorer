@@ -69,14 +69,14 @@ class _DuplicateFileDisplayScreenState extends State<DuplicateFileDisplayScreen>
       return true;
     else
       return false;
-    //return ret;
+  
   }
 
   List<ListView> la;
   
-var d = new List<MyFile>();
+
   Future convertToLists(List<MyFile> ls) async {
-    
+    var d = new List<MyFile>();
     Future<MyFile> m;
     for (int k = 0; k < ls.length; k++) {
       if (ls[k] is MyFile && mime(ls[k].path) != null) {
@@ -105,34 +105,33 @@ var d = new List<MyFile>();
           if ((x == y) &&
               (x1 == y1) &&
                calculateMD5SumAsyncWithPlugin(
-                  ls[k].path, ls[i].path)) // == snapshot.data[i].name)
+                  ls[k].path, ls[i].path)) //)
           {
-            setState(() {
+            
               
               list.add(ls[i]);
             list2.add(ls[i].name);
             d.add(ls[i]);
             
             ls.removeAt(i);
-            });
+           
           }
         }
 
         if (list.length >= 2) {
-          setState(() {
+         
             d.add(list[0]);
-          });
+        
         }
       }
     }
-  //  m= Future.forEach(d, (i)=>i);
-    //print(m);
+ 
     return d;
   }
 
   void initState() {
     _scrollController = ScrollController(keepScrollOffset: true);
-    //convertToLists();
+    
     super.initState();
   }
 
