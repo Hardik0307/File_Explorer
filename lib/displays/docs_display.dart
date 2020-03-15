@@ -55,14 +55,14 @@ class _DocsDisplayScreenState extends State<DocsDisplayScreen>
               style: TextStyle(fontSize: 14.0),
               maxLines: 3,
             ),
-            leading: BackButton(onPressed: () {
-              if (coreNotifier.currentPath.absolute.path == pathlib.separator) {
-                Navigator.popUntil(
-                    context, ModalRoute.withName(Navigator.defaultRouteName));
-              } else {
-                coreNotifier.navigateBackdward();
-              }
-            }),
+            // leading: BackButton(onPressed: () {
+            //   if (coreNotifier.currentPath.absolute.path == pathlib.separator) {
+            //     Navigator.popUntil(
+            //         context, ModalRoute.withName(Navigator.defaultRouteName));
+            //   } else {
+            //     coreNotifier.navigateBackdward();
+            //   }
+            // }),
             actions: <Widget>[
               IconButton(
                 // Go home
@@ -101,15 +101,7 @@ class _DocsDisplayScreenState extends State<DocsDisplayScreen>
                     if (snapshot.hasError) {
                       return Center(child: Text('Error: ${snapshot.error}'));
                     } else if (snapshot.data.length != 0) {
-                      return GridView.builder(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          controller: _scrollController,
-                          key: PageStorageKey(widget.path),
-                          padding:
-                              EdgeInsets.only(left: 10.0, right: 10.0, top: 0),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 4),
+                      return ListView.builder(
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
                             if (snapshot.data[index] is MyFile) {
@@ -132,8 +124,12 @@ class _DocsDisplayScreenState extends State<DocsDisplayScreen>
                                   s == 'application/x-tar' ||
                                   s == 'application/zip' ||
                                   s == 'application/x-7z-compressed') {
-                                return FileWidget(
-                                  name: snapshot.data[index].name,
+                                return Card(
+                                  
+                                  
+                                  child: ListTile(
+                                    leading:Image.asset('assets/doc.jpeg'),
+                                  title: Text(snapshot.data[index].name),
                                   onTap: () {
                                     _printFuture(OpenFile.open(
                                         snapshot.data[index].path));
@@ -146,7 +142,7 @@ class _DocsDisplayScreenState extends State<DocsDisplayScreen>
                                               name: snapshot.data[index].name,
                                             ));
                                   },
-                                );
+                                ));
                               }
                             }
                             return Container();

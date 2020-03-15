@@ -98,14 +98,14 @@ class FileContextDialog extends StatelessWidget {
                   ),
 
                   // copy single files
-                  SimpleDialogOption(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        model.copyFile(path);
-                      },
-                      child: ListTile(
-                          leading: Icon(Icons.content_copy),
-                          title: Text('Copy'))),
+                  // SimpleDialogOption(
+                  //     onPressed: () {
+                  //       Navigator.pop(context);
+                  //       model.copyFile(path);
+                  //     },
+                  //     child: ListTile(
+                  //         leading: Icon(Icons.content_copy),
+                  //         title: Text('Copy'))),
 
                   SimpleDialogOption(
                       onPressed: () {

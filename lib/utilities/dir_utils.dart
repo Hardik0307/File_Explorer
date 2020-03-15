@@ -172,6 +172,10 @@ Future<List<dynamic>> searchFiles(dynamic path, String query,
   return files;
 }
 
+//------------------------------------------
+
+
+
 Future<List<dynamic>> searchDuplicateFiles(dynamic path, String query,
     {bool matchCase: false, recursive: true, bool hidden: false}) async {
   int start = DateTime.now().millisecondsSinceEpoch;

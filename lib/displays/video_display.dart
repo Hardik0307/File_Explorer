@@ -55,14 +55,14 @@ class _VIdeoDisplayScreenState extends State<VIdeoDisplayScreen>
               style: TextStyle(fontSize: 14.0),
               maxLines: 3,
             ),
-            leading: BackButton(onPressed: () {
-              if (coreNotifier.currentPath.absolute.path == pathlib.separator) {
-                Navigator.popUntil(
-                    context, ModalRoute.withName(Navigator.defaultRouteName));
-              } else {
-                coreNotifier.navigateBackdward();
-              }
-            }),
+            // leading: BackButton(onPressed: () {
+            //   if (coreNotifier.currentPath.absolute.path == pathlib.separator) {
+            //     Navigator.popUntil(
+            //         context, ModalRoute.withName(Navigator.defaultRouteName));
+            //   } else {
+            //     coreNotifier.navigateBackdward();
+            //   }
+            // }),
             actions: <Widget>[
               IconButton(
                 // Go home
@@ -101,15 +101,7 @@ class _VIdeoDisplayScreenState extends State<VIdeoDisplayScreen>
                     if (snapshot.hasError) {
                       return Center(child: Text('Error: ${snapshot.error}'));
                     } else if (snapshot.data.length != 0) {
-                      return GridView.builder(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          controller: _scrollController,
-                          key: PageStorageKey(widget.path),
-                          padding:
-                              EdgeInsets.only(left: 10.0, right: 10.0, top: 0),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 4),
+                      return ListView.builder(
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
                             if (snapshot.data[index] is MyFile) {
@@ -121,8 +113,10 @@ class _VIdeoDisplayScreenState extends State<VIdeoDisplayScreen>
                                   s == 'video/3gpp' ||
                                   s == 'video/x-msvideo' ||
                                   s == 'video/x-ms-wmv') {
-                                return FileWidget(
-                                  name: snapshot.data[index].name,
+                                return Card(
+                                  child:ListTile(
+                                    leading: Image.asset('assets/video.jpeg'),
+                                  title: Text(snapshot.data[index].name),
                                   onTap: () {
                                     _printFuture(OpenFile.open(
                                         snapshot.data[index].path));
@@ -135,7 +129,7 @@ class _VIdeoDisplayScreenState extends State<VIdeoDisplayScreen>
                                               name: snapshot.data[index].name,
                                             ));
                                   },
-                                );
+                                ));
                               }
                             }
                             return Container();

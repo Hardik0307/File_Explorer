@@ -20,24 +20,10 @@ class CategoryWise extends StatelessWidget {
             "Browse Category Wise",
           ),
           backgroundColor: Colors.blueGrey,
-          leading: BackButton(onPressed: () {
-            if (coreNotifier.currentPath.absolute.path == pathlib.separator) {
-              Navigator.popUntil(
-                  context, ModalRoute.withName(Navigator.defaultRouteName));
-            } else {
-              coreNotifier.navigateBackdward();
-            }
-          }),
+          
         ),
 
-        // body: ListView(
-        //   children: [
-        //     _tile('Images', '', 'assets/imgicon.png'),
-        //     _tile('Audios', '', 'assets/musicicon.png'),
-        //     _tile('Videos', '', 'assets/videoicon.png'),
-        //     _tile('Documents', '', 'assets/docicon.png'),
-        //   ],
-        // )
+        
         body: ListView(
           children: <Widget>[
             Card(
