@@ -137,7 +137,7 @@ class _DuplicateFileDisplayScreenState extends State<DuplicateFileDisplayScreen>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+        super.build(context);
     final preferences = Provider.of<PreferencesNotifier>(context);
     var coreNotifier = Provider.of<CoreNotifier>(context);
     //var list1 = new List<String>();
@@ -149,14 +149,7 @@ class _DuplicateFileDisplayScreenState extends State<DuplicateFileDisplayScreen>
               style: TextStyle(fontSize: 14.0),
               maxLines: 3,
             ),
-            leading: BackButton(onPressed: () {
-              if (coreNotifier.currentPath.absolute.path == pathlib.separator) {
-                Navigator.popUntil(
-                    context, ModalRoute.withName(Navigator.defaultRouteName));
-              } else {
-                coreNotifier.navigateBackdward();
-              }
-            }),
+          
             actions: <Widget>[
               IconButton(
                 // Go home
@@ -204,7 +197,8 @@ class _DuplicateFileDisplayScreenState extends State<DuplicateFileDisplayScreen>
                             return ListView.builder(
                               itemCount: snapshot1.data.length,
                               itemBuilder: (context, index){
-                                return ListTile(
+                                return Card(
+                                 child:ListTile(
                                   leading:Image.asset('assets/fileicon1.png'),
                                   title: Text(snapshot1.data[index].name),
                                 onTap: () {
@@ -219,7 +213,7 @@ class _DuplicateFileDisplayScreenState extends State<DuplicateFileDisplayScreen>
                                             name: snapshot1.data[index].name,
                                           ));
                                 },
-                              );
+                              ));
                               },
                             );
                              

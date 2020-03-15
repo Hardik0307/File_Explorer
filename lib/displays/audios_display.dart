@@ -54,14 +54,14 @@ class _AudioDisplayScreenState extends State<AudioDisplayScreen>
               style: TextStyle(fontSize: 14.0),
               maxLines: 3,
             ),
-            leading: BackButton(onPressed: () {
-              if (coreNotifier.currentPath.absolute.path == pathlib.separator) {
-                Navigator.popUntil(
-                    context, ModalRoute.withName(Navigator.defaultRouteName));
-              } else {
-                coreNotifier.navigateBackdward();
-              }
-            }),
+            // leading: BackButton(onPressed: () {
+            //   if (coreNotifier.currentPath.absolute.path == pathlib.separator) {
+            //     Navigator.popUntil(
+            //         context, ModalRoute.withName(Navigator.defaultRouteName));
+            //   } else {
+            //     coreNotifier.navigateBackdward();
+            //   }
+            // }),
             actions: <Widget>[
               IconButton(
                 // Go home
@@ -100,30 +100,24 @@ class _AudioDisplayScreenState extends State<AudioDisplayScreen>
                     if (snapshot.hasError) {
                       return Center(child: Text('Error: ${snapshot.error}'));
                     } else if (snapshot.data.length != 0) {
-                      return GridView.builder(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          controller: _scrollController,
-                          key: PageStorageKey(widget.path),
-                          padding:
-                              EdgeInsets.only(left: 10.0, right: 10.0, top: 0),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 4),
+                      return ListView.builder(
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
                             if (snapshot.data[index] is MyFile) {
                               //print(snapshot.data[index].path);
                               //String s = pathlib.extension(snapshot.data[index].path);
                               String s = mime(snapshot.data[index].path);
-                              print(s);
+                             // print(s);
                               if (s == 'audio/mpeg' ||
                                   s == 'audio/basic' ||
                                   s == 'audio/mid	' ||
                                   s == 'audio/x-aiff' ||
                                   s == 'audio/ogg' ||
                                   s == 'audio/vnd.wav') {
-                                return FileWidget(
-                                  name: snapshot.data[index].name,
+                                return Card(
+                                  child: ListTile(
+                                    leading: Image.asset('assets/music1.jpeg'),
+                                  title:Text(snapshot.data[index].name),
                                   onTap: () {
                                     _printFuture(OpenFile.open(
                                         snapshot.data[index].path));
@@ -136,7 +130,7 @@ class _AudioDisplayScreenState extends State<AudioDisplayScreen>
                                               name: snapshot.data[index].name,
                                             ));
                                   },
-                                );
+                                ));
                               }
                             }
                             return Container();

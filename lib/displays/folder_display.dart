@@ -1,4 +1,3 @@
-// framework
 import 'package:file_explorer/views/create_folder_dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +29,7 @@ class FolderListScreen extends StatefulWidget {
   const FolderListScreen({@required this.path, this.home: false})
       : assert(path != null);
   @override
-  _FolderListScreenState createState() => _FolderListScreenState();
+  _FolderListScreenState createState() => _FolderListScreenState(path:this.path);
 }
 
 class _FolderListScreenState extends State<FolderListScreen>
@@ -38,9 +37,14 @@ class _FolderListScreenState extends State<FolderListScreen>
   ScrollController _scrollController;
   @override
   void initState() {
+
+    
     _scrollController = ScrollController(keepScrollOffset: true);
     super.initState();
   }
+  String path;
+  _FolderListScreenState({this.path});
+
 
   @override
   void dispose() {
@@ -55,16 +59,12 @@ class _FolderListScreenState extends State<FolderListScreen>
     var coreNotifier = Provider.of<CoreNotifier>(context);
 
     return Scaffold(
-        drawer: new Drawer(
+        drawer:this.path=='/storage/emulated/0/'? new Drawer(
             child: new ListView(
           children: <Widget>[
             new UserAccountsDrawerHeader(
-              // currentAccountPicture: new CircleAvatar(
-              //   //backgroundColor:defaultTargetPlatform == TargetPlatform.android?Colors.green:null,
-              //   backgroundColor: Colors.lime,
-              //   child: new Text("Swift Drawer"),
-              // ),
-              accountEmail: null,
+             
+              accountEmail:null,
               accountName: null,
             ),
             new ListTile(
@@ -72,11 +72,12 @@ class _FolderListScreenState extends State<FolderListScreen>
               title: Text('Images'),
               dense: false,
               onTap: () {
+                Navigator.pop(context);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            ImageDisplayScreen(path: '/storage/emulated/0/')));
+                            ImageDisplayScreen(path: this.path)));
               },
             ),
             new ListTile(
@@ -88,7 +89,7 @@ class _FolderListScreenState extends State<FolderListScreen>
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            AudioDisplayScreen(path: '/storage/emulated/0/')));
+                            AudioDisplayScreen(path: this.path)));
               },
             ),
             new ListTile(
@@ -100,7 +101,7 @@ class _FolderListScreenState extends State<FolderListScreen>
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            DocsDisplayScreen(path: '/storage/emulated/0/')));
+                            DocsDisplayScreen(path:this.path)));
               },
             ),
             new ListTile(
@@ -112,7 +113,7 @@ class _FolderListScreenState extends State<FolderListScreen>
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            VIdeoDisplayScreen(path: '/storage/emulated/0/')));
+                            VIdeoDisplayScreen(path:this.path)));
               },
             ),
             new ListTile(
@@ -124,18 +125,19 @@ class _FolderListScreenState extends State<FolderListScreen>
                     context,
                     MaterialPageRoute(
                         builder: (context) => DuplicateFileDisplayScreen(
-                            path: '/storage/emulated/0/')));
+                            path:this.path)));
               },
             )
           ],
-        )),
+        )):null,
         appBar: AppBar(
-            title: Text(
+            title:this.path.startsWith('/storage/emulated/0/')? Text(
               "Internal Storage",
               //coreNotifier.currentPath.absolute.path,
               style: TextStyle(fontSize: 14.0),
               maxLines: 3,
-            ),
+            ):Text("External Storage",style: TextStyle(fontSize: 14.0),
+              maxLines: 3,),
             actions: <Widget>[
               IconButton(
                 // Go home

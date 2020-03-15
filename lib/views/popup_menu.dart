@@ -42,10 +42,10 @@ class AppBarPopupMenu extends StatelessWidget {
             //...
           },
           itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-                PopupMenuItem<String>(
-                    enabled: model.copyList.isNotEmpty,
-                    value: 'paste',
-                    child: Text('Paste Here')),
+                // PopupMenuItem<String>(
+                //     enabled: model.copyList.isNotEmpty,
+                //     value: 'paste',
+                //     child: Text('Paste Here')),
 
                 const PopupMenuItem<String>(
                     value: 'refresh', child: Text('Refresh')),

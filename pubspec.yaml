@@ -38,6 +38,7 @@ dependencies:
   esys_flutter_share: ^1.0.2
   mime_type: ^0.2.4
   flutter_launcher_icons: ^0.7.4
+  progress_dialog: ^1.2.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -76,6 +77,10 @@ flutter:
     - assets/musicicon.png
     - assets/videoicon.png
     - assets/duplicateicon.png
+    - assets/doc.jpeg
+    - assets/image.jpeg
+    - assets/music1.jpeg
+    - assets/video.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

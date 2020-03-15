@@ -55,20 +55,14 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen>
               style: TextStyle(fontSize: 14.0),
               maxLines: 3,
             ),
-            leading: BackButton(onPressed: () {
-              if (coreNotifier.currentPath.absolute.path == pathlib.separator) {
-                Navigator.popUntil(
-                    context, ModalRoute.withName(Navigator.defaultRouteName));
-              } else {
-                coreNotifier.navigateBackdward();
-              }
-            }),
+            // 
             actions: <Widget>[
               IconButton(
                 // Go home
                 onPressed: () {
                   Navigator.popUntil(
                       context, ModalRoute.withName(Navigator.defaultRouteName));
+                 //  Navigator.pop(context);
                 },
                 icon: Icon(Icons.home),
               ),
@@ -101,15 +95,7 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen>
                     if (snapshot.hasError) {
                       return Center(child: Text('Error: ${snapshot.error}'));
                     } else if (snapshot.data.length != 0) {
-                      return GridView.builder(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          controller: _scrollController,
-                          key: PageStorageKey(widget.path),
-                          padding:
-                              EdgeInsets.only(left: 10.0, right: 10.0, top: 0),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 4),
+                      return ListView.builder(
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
                             String s = mime(snapshot.data[index].path);
@@ -125,8 +111,9 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen>
                                     s == 'image/png')) {
                               //print(s);
 
-                              return FileWidget(
-                                name: snapshot.data[index].name,
+                              return Card(child:ListTile(
+                               leading:Image.asset('assets/image.jpeg'),
+                                title:Text(snapshot.data[index].name),
                                 onTap: () {
                                   _printFuture(
                                       OpenFile.open(snapshot.data[index].path));
@@ -139,10 +126,10 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen>
                                             name: snapshot.data[index].name,
                                           ));
                                 },
-                              );
+                              ));
                             }
 
-                            return Container();
+                          return Container();
                           });
                     } else {
                       return Center(
