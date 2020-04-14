@@ -14,7 +14,20 @@ A try to build File Explorer Application on Dart's Flutter Framework
 [Naming Scheme Guide](https://en.wikipedia.org/wiki/Software_versioning#Designating_development_stage)
 
 ### Application Major Functions
-1. It provide a way to explore all files on device and memory card.
-2. App provide file related CRUD operations on File and Folder.
-3. Users are able to see categorywise files. (e.g. audio, documents, video...).
-4. User can search files/folders by name.
+- [x] It provides a way to explore all files on the device and memory card.
+- [x] App provides file related CRUD operations on File and Folder.
+- [x] Users are able to see category-wise files. (e.g. audio, documents, video...).
+- [x] Users can search files/folders by name.
+- [x] Users can delete files that are the same among each other.
+- [x] Dark Mode Supported
+
+### Screenshots
+
+<img height="480px" src="assets/ss/ss (17).jpg">
+<br/>
+<p float="left">
+  <img src="assets/ss/ss (18).jpg" width="200" />
+  <img src="assets/ss/ss (19).jpg" width="200" />
+  <img src="assets/ss/ss (2).jpg" width="200" />
+ 
+</p>
