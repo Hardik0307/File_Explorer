@@ -5,14 +5,12 @@ import 'package:mime_type/mime_type.dart';
 // packages
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
-import 'package:path/path.dart' as pathlib;
 
 // app files
 import 'package:file_explorer/notifiers/core.dart';
 import 'package:file_explorer/views/popup_menu.dart';
 import 'package:file_explorer/views/search.dart';
 import 'package:file_explorer/notifiers/preferences.dart';
-import 'package:file_explorer/views/file.dart';
 import 'package:file_explorer/models/file.dart';
 import 'package:file_explorer/utilities/dir_utils.dart' as filesystem;
 import 'package:file_explorer/views/file_folder_dialog.dart';
@@ -45,7 +43,6 @@ class _ImageDisplayScreenState extends State<ImageDisplayScreen>
   Widget build(BuildContext context) {
     super.build(context);
     final preferences = Provider.of<PreferencesNotifier>(context);
-    var coreNotifier = Provider.of<CoreNotifier>(context);
 
     return Scaffold(
         appBar: AppBar(

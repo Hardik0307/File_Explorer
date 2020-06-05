@@ -3,17 +3,11 @@ import 'dart:io';
 
 // framework
 import 'package:file_explorer/notifiers/core.dart';
-import 'package:file_explorer/views/popup_menu.dart';
 import 'package:flutter/material.dart';
-
-// packages
-// import 'package:path_provider/path_provider.dart';
 
 // app
 import 'package:file_explorer/utilities/dir_utils.dart';
 import 'package:file_explorer/displays/folder_display.dart';
-// import 'package:basic_file_manager/ui/widgets/appbar_popup_menu.dart';
-// import 'package:basic_file_manager/helpers/filesystem_utils.dart' as filesystem;
 import 'package:provider/provider.dart';
 
 class StorageScreen extends StatefulWidget {

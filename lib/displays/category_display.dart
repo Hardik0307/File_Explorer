@@ -1,18 +1,13 @@
-//import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:file_explorer/displays/docs_display.dart';
 import 'package:file_explorer/displays/images_display.dart';
 import 'package:file_explorer/displays/audios_display.dart';
 import 'package:file_explorer/displays/video_display.dart';
-import 'package:file_explorer/notifiers/core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:path/path.dart' as pathlib;
 
 class CategoryWise extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var coreNotifier = Provider.of<CoreNotifier>(context, listen: false);
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -88,17 +83,3 @@ class CategoryWise extends StatelessWidget {
     );
   }
 }
-
-// ListTile _tile(String title, String subtitle, String a) => ListTile(
-//       title: Text(title,
-//           style: TextStyle(
-//             fontWeight: FontWeight.w500,
-//             fontSize: 20,
-//           )),
-//       subtitle: Text(subtitle),
-//       leading: Image.asset(
-//         a,
-//         width: 50,
-//         height: 50,
-//       ),
-//     );
