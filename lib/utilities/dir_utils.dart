@@ -7,9 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:package_info/package_info.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:mime_type/mime_type.dart';
 import 'package:file_explorer/utilities/sort_utils.dart' as utils;
-import 'package:md5_plugin/md5_plugin.dart';
 String storageRootPath = "/storage/emulated/0/";
 
 Future<List<Directory>> getStorageList() async {
@@ -91,19 +89,7 @@ Future<List<dynamic>> search(dynamic path, String query,
   return files;
 }
 
-/*Future<List<dynamic>> searchAll(dynamic path, String query,
-    {bool matchCase: false, recursive: true, bool hidden: false}) async {
-  int start = DateTime.now().millisecondsSinceEpoch;
 
-  List<dynamic> files =
-      await getFoldersAndFiles(path, recursive: recursive, keepHidden: hidden);
-  // ..retainWhere(
-  //     (test) => test.name.toLowerCase().contains(query.toLowerCase()));
-
-  int end = DateTime.now().millisecondsSinceEpoch;
-  stdout.writeln("Searching time : ${end - start} ms");
-  return files;
-}*/
 
 Future<int> getFreeSpace(String path) async {
   MethodChannel platform = const MethodChannel('samples.flutter.dev/battery');
@@ -187,9 +173,7 @@ Future<List<dynamic>> searchDuplicateFiles(dynamic path, String query,
   stdout.writeln("Searching time : ${end - start} ms");
 
   List<dynamic> files1;
-  int flag;
   for (int i = 0; i < files.length - 1; i++) {
-    flag = 0;
     for (int j = 0; j < files.length; j++) {
       if (files[i] == files[j]) {
         files1.add(files[i]);

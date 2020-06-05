@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // packages
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
-import 'package:path/path.dart' as pathlib;
 import 'package:file_explorer/displays/docs_display.dart';
 import 'package:file_explorer/displays/images_display.dart';
 import 'package:file_explorer/displays/audios_display.dart';
@@ -56,7 +55,6 @@ class _FolderListScreenState extends State<FolderListScreen>
   Widget build(BuildContext context) {
     super.build(context);
     final preferences = Provider.of<PreferencesNotifier>(context);
-    var coreNotifier = Provider.of<CoreNotifier>(context);
 
     return Scaffold(
         drawer:this.path=='/storage/emulated/0/'? new Drawer(

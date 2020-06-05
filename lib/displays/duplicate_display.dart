@@ -1,22 +1,14 @@
 // framework
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-
+import 'package:path/path.dart' as p;
 // packages
 import 'package:open_file/open_file.dart';
-import 'package:provider/provider.dart';
-import 'package:path/path.dart' as pathlib;
 import 'package:mime_type/mime_type.dart';
 
 // app files
 import 'package:file_explorer/notifiers/core.dart';
-import 'package:file_explorer/views/popup_menu.dart';
-import 'package:file_explorer/views/search.dart';
-import 'package:file_explorer/notifiers/preferences.dart';
-import 'package:file_explorer/views/file.dart';
 import 'package:file_explorer/models/file.dart';
-import 'package:file_explorer/utilities/dir_utils.dart' as filesystem;
 import 'package:file_explorer/views/file_folder_dialog.dart';
 
 import 'package:md5_plugin/md5_plugin.dart';
@@ -31,263 +23,230 @@ class DuplicateFileDisplayScreen extends StatefulWidget {
       _DuplicateFileDisplayScreenState();
 }
 
+class Duplicate {
+  String hash;
+  MyFile fileobject;
+  Duplicate({this.hash, this.fileobject});
+}
+
+String getImage(String path) {
+  String s = mime(path);
+  // print(s);
+  if (s == 'audio/mpeg' ||
+      s == 'audio/basic' ||
+      s == 'audio/mid	' ||
+      s == 'audio/x-aiff' ||
+      s == 'audio/ogg' ||
+      s == 'audio/vnd.wav') {
+    return 'assets/music1.jpeg';
+  } else if (s == 'application/msword' ||
+      s ==
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+      s == 'application/json' ||
+      s == 'application/vnd.oasis.opendocument.text' ||
+      s == 'application/vnd.oasis.opendocument.spreadsheet' ||
+      s == 'application/vnd.oasis.opendocument.presentation' ||
+      s == 'application/pdf' ||
+      s == 'application/vnd.ms-powerpoint' ||
+      s == 'application/x-rar-compressed ' ||
+      s == 'application/x-tar' ||
+      s == 'application/zip' ||
+      s == 'application/x-7z-compressed') {
+    return 'assets/doc.jpeg';
+  } else if (s == 'video/mp4' ||
+      s == 'video/x-flv' ||
+      s == 'video/3gpp' ||
+      s == 'video/x-msvideo' ||
+      s == 'video/x-ms-wmv') {
+    return 'assets/video.jpeg';
+  } else if (s == 'image/bmp	' ||
+      s == 'image/cis-cod' ||
+      s == 'image/jpeg' ||
+      s == 'image/tiff' ||
+      s == 'image/gif' ||
+      s == 'image/ief' ||
+      s == 'image/png') {
+    return 'assets/image.jpeg';
+  } else {
+    return 'assets/fileicon1.png';
+  }
+}
+
 class _DuplicateFileDisplayScreenState extends State<DuplicateFileDisplayScreen>
     with AutomaticKeepAliveClientMixin {
   ScrollController _scrollController;
   var list_file = new List<Future>();
   _DuplicateFileDisplayScreenState() {}
   @override
-  
-
   @override
   void dispose() {
-    _scrollController.dispose();
+    //_scrollController.dispose();
     super.dispose();
   }
 
-  String path = null;
-
-  bool calculateMD5SumAsyncWithPlugin(String filePath, String filePath1) {
-    Future<String> ret;
-    Future<String> ret1;
-    String x;
-    String y;
-
-    ret =  Md5Plugin.getMD5WithPath(filePath);
-    ret.then((val) {
-      print(val);
-      x = val;
-    });
-
-    ret1 = Md5Plugin.getMD5WithPath(filePath1);
-    ret1.then((val) {
-      print(val);
-      y = val;
-    });
-
-    if (x == y)
-      return true;
-    else
-      return false;
-  
-  }
-
+  int flag = 0;
   List<ListView> la;
-  
+  List<MyFile> file;
+  List<Duplicate> dup = new List();
+  List<String> hash = new List();
 
-  Future convertToLists(List<MyFile> ls) async {
-    var d = new List<MyFile>();
-    Future<MyFile> m;
-    for (int k = 0; k < ls.length; k++) {
-      if (ls[k] is MyFile && mime(ls[k].path) != null) {
-        var list = new List<MyFile>();
-        var list2 = new List<String>();
-
-        list.add(ls[k]);
-        list2.add(ls[k].name);
-
-        for (int i = k + 1; i < ls.length; i++) {
-          int x = 1, y = 2;
-          String x1 = "a", y1 = "b";
-          bool exists1 = Directory(ls[k].path).existsSync();
-          bool exists2 = Directory(ls[i].path).existsSync();
-
-          if (mime(ls[k].path) != null && exists1 == false) {
-            var file = File(ls[k].path);
-            x = file.lengthSync();
-            x1 = mime(ls[k].path);
+  List<Duplicate> x = new List();
+  Future<void> sortDuplicate() async {
+    dup.sort((a, b) => (a.hash).compareTo(b.hash));
+    for (int i = 0; i < dup.length - 1;) {
+      flag = 0;
+      int j;
+      for (j = i + 1; j < dup.length; j++) {
+        if ((dup[i].hash).compareTo(dup[j].hash) == 0) {
+          if (mime(dup[i].fileobject.path) == mime(dup[j].fileobject.path)) {
+            x.add(dup[j]);
+            flag = 1;
           }
-          if (mime(ls[i].path) != null && exists2 == false) {
-            var file1 = File(ls[i].path);
-            y = file1.lengthSync();
-            y1 = mime(ls[i].path);
-          }
-          if ((x == y) &&
-              (x1 == y1) &&
-               calculateMD5SumAsyncWithPlugin(
-                  ls[k].path, ls[i].path)) //)
-          {
-            
-              
-              list.add(ls[i]);
-            list2.add(ls[i].name);
-            d.add(ls[i]);
-            
-            ls.removeAt(i);
-           
-          }
-        }
-
-        if (list.length >= 2) {
-         
-            d.add(list[0]);
-        
+        } else {
+          break;
         }
       }
+      if (flag == 1) {
+        x.add(dup[i]);
+        x.add(new Duplicate(hash: null, fileobject: null));
+      }
+      i = j;
     }
- 
-    return d;
+
+    setState(() {
+      flag = 1;
+    });
+  }
+
+  Future<void> calculateMD5SumAsyncWithPlugin() async {
+    for (int i = 0; i < file.length; i++) {
+      String x = null;
+      await Md5Plugin.getMD5WithPath(file[i].path).then((val) {
+        dup.add(new Duplicate(hash: val, fileobject: file[i]));
+        x = val;
+      });
+    }
+    int x = 0;
+    setState(() {
+      x = 1;
+    });
+    dup.removeWhere((element) => element.hash == null);
+    await sortDuplicate();
+    print("Finish");
+  }
+
+  Future<void> calculateHash() async {
+    Directory _path = Directory("/storage/emulated/0/");
+    List<dynamic> _files1;
+    try {
+      _files1 = await _path.list(recursive: true).toList();
+      _files1 = _files1.map((path) {
+        return MyFile(
+            name: p.split(path.absolute.path).last,
+            path: path.absolute.path,
+            type: "File");
+      }).toList();
+      _files1.removeWhere((test) {
+        return test.name.startsWith('.') == true || mime(test.path) == null;
+      });
+    } on FileSystemException catch (e) {
+      stdout.writeln(e);
+    }
+
+    file = _files1.cast<MyFile>();
+    print(file.length);
+    await calculateMD5SumAsyncWithPlugin();
   }
 
   void initState() {
-    _scrollController = ScrollController(keepScrollOffset: true);
-    
+    calculateHash();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-        super.build(context);
-    final preferences = Provider.of<PreferencesNotifier>(context);
-    var coreNotifier = Provider.of<CoreNotifier>(context);
-    //var list1 = new List<String>();
+    super.build(context);
 
-    return Scaffold(
+    if (file != null && flag == 1) {
+      return Scaffold(
         appBar: AppBar(
-            title: Text(
-              "Duplicate Files",
-              style: TextStyle(fontSize: 14.0),
-              maxLines: 3,
-            ),
-          
-            actions: <Widget>[
-              IconButton(
-                // Go home
-                onPressed: () {
-                  Navigator.popUntil(
-                      context, ModalRoute.withName(Navigator.defaultRouteName));
-                },
-                icon: Icon(Icons.home),
-              ),
-              IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () => showSearch(
-                    context: context, delegate: Search(path: widget.path)),
-              ),
-              AppBarPopupMenu(path: widget.path)
-            ]),
-        body: RefreshIndicator(
-          onRefresh: () {
-            return Future.delayed(Duration(milliseconds: 100))
-                .then((_) => setState(() {}));
-          },
-          child: Consumer<CoreNotifier>(
-            builder: (context, model, child) => FutureBuilder<List<dynamic>>(
-              // This function Invoked every time user go back to the previous directory
-              future: filesystem.searchFiles(
-                  model.currentPath.absolute.path, '',
-                  recursive: true),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.none:
-                    return Text('Press button to start.');
-                  case ConnectionState.active:
-                  case ConnectionState.waiting:
-                    return Center(child: CircularProgressIndicator());
-                  case ConnectionState.done:
-                    if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    } else if (snapshot.data.length != 0) {
-                      
-                      return new Container(
-
-                        child: FutureBuilder(
-                          future:convertToLists(snapshot.data) ,
-                          builder: (BuildContext context, AsyncSnapshot snapshot1) {
-                            return ListView.builder(
-                              itemCount: snapshot1.data.length,
-                              itemBuilder: (context, index){
-                                return Card(
-                                 child:ListTile(
-                                  leading:Image.asset('assets/fileicon1.png'),
-                                  title: Text(snapshot1.data[index].name),
-                                onTap: () {
-                                  _printFuture(
-                                      OpenFile.open(snapshot1.data[index].path));
-                                },
-                                onLongPress: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => FileContextDialog(
-                                            path: snapshot1.data[index].path,
-                                            name: snapshot1.data[index].name,
-                                          ));
-                                },
-                              ));
-                              },
-                            );
-                             
-                          },
-                        )                       
-                        
-                        
-                        
-                        /* ListView.builder(
-                            itemCount: d.length,
-                            itemBuilder: (context, index) {
-                             /* return Card (
-                                child:ListTile(
-                                leading:Image(image:AssetImage('assets/fileicon1.png')),
-                                title: Text(l[index].name),
-                                 onTap: () {
-                                  _printFuture(
-                                      OpenFile.open(snapshot.data[index].path));
-                                },
-                                onLongPress: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => FileContextDialog(
-                                            path:d[index].path,
-                                            name:d[index].name,
-                                          ));
-                                })
-                              );*/
-                              
-                            }),*/
-                      );
-                    } else {
-                      return Center(
-                        child: Text("Empty Directory!"),
-                      );
-                    }
-                }
-                return null; // unreachable
-              },
-            ),
+          title: Text(
+            "Duplicate Files",
+            style: TextStyle(fontSize: 14.0),
+            maxLines: 3,
           ),
         ),
-
-        // check if the in app floating action button is activated in settings
-        floatingActionButton: StreamBuilder<bool>(
-          stream: preferences.showFloatingButton, //	a	Stream<int>	or	null
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            if (snapshot.hasError) return Text('Error:	${snapshot.error}');
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-                return Text('Select	lot');
-              case ConnectionState.waiting:
-                return CircularProgressIndicator();
-              case ConnectionState.active:
-                return FolderFloatingActionButton(
-                  enabled: snapshot.data,
-                  path: widget.path,
-                );
-              case ConnectionState.done:
-                FolderFloatingActionButton(enabled: snapshot.data);
+        body: ListView.builder(
+          itemCount: x.length,
+          itemBuilder: (context, index) {
+            if (x[index].hash != null) {
+              return Dismissible(
+                background: new Container(color:Colors.red),
+                key: UniqueKey(),
+                onDismissed: (direction) {
+                    String path=x[index].fileobject.path;
+                    String name=x[index].fileobject.name;
+                    CoreNotifier model=new CoreNotifier();
+                  setState(() {
+                    x.removeAt(index);
+                    model.delete(path);
+                    Scaffold.of(context).showSnackBar(new SnackBar(content: Text(
+                      "${name}  Removed..."
+                    ),
+                    duration:Duration(seconds:1) ,
+                    ),
+                    );
+                    });
+                },
+            child: ListTile(
+                  leading: Image.asset(getImage(x[index].fileobject.path)),
+                  title: Text(x[index].fileobject.name),
+                  onTap: () {
+                                  _printFuture(
+                                        OpenFile.open(x[index].fileobject.path));
+                                  },
+                                  onLongPress: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => FileContextDialog(
+                                              path: x[index].fileobject.path,
+                                              name: x[index].fileobject.path,
+                                      ));
+                                  },
+                ),
+              );
+            } else {
+              return Divider(
+                color: Colors.black,
+              );
             }
-            return null;
           },
-        ));
+        ),
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Duplicate Files",
+            style: TextStyle(fontSize: 14.0),
+            maxLines: 3,
+          ),
+        ),
+        body: Center(
+            child: Text(
+          "Loading...",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        )),
+      );
+    }
   }
 
   @override
   bool get wantKeepAlive => true;
 }
-
 _printFuture(Future<String> open) async {
   print("Opening: " + await open);
 }
-
 class FolderFloatingActionButton extends StatelessWidget {
   final bool enabled;
   final String path;
