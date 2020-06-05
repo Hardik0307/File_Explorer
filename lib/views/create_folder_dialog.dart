@@ -53,7 +53,7 @@ class _CreateFileDialogState extends State<CreateFolderDialog> {
                           controller: _textEditingController,
                           onChanged: (name) {
                             // Not allowed characters for album name, since we are creating real
-                            // folder on linux
+                            
                             if (name.contains("/")) {
                               if (_allowedFolderName == true) {
                                 setState(() {

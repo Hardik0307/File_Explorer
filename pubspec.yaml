@@ -46,7 +46,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   md5_plugin : ^1.0.2
   
-
+  loading: ^1.0.2
 
 
 
