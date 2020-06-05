@@ -1,5 +1,4 @@
 // framework
-import 'package:file_explorer/displays/category_display.dart';
 import 'package:flutter/material.dart';
 
 // packages
@@ -27,25 +26,18 @@ class AppBarPopupMenu extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (context) => CreateFolderDialog(path: path));
-            } else if (value == "category") {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => CategoryWise()));
-            } else if (value == "settings") {
+            } 
+             else if (value == "settings") {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => Settings()));
             } else if (value == "about") {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => AboutScreen()));
-            } else if (value == "paste") {
-              model.pasteByPath(path);
             }
             //...
           },
           itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-                // PopupMenuItem<String>(
-                //     enabled: model.copyList.isNotEmpty,
-                //     value: 'paste',
-                //     child: Text('Paste Here')),
+                
 
                 const PopupMenuItem<String>(
                     value: 'refresh', child: Text('Refresh')),

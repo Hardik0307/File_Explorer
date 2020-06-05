@@ -1,6 +1,8 @@
 // framework
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:loading/indicator/ball_pulse_indicator.dart';
+import 'package:loading/loading.dart';
 import 'package:path/path.dart' as p;
 // packages
 import 'package:open_file/open_file.dart';
@@ -232,12 +234,13 @@ class _DuplicateFileDisplayScreenState extends State<DuplicateFileDisplayScreen>
             maxLines: 3,
           ),
         ),
-        body: Center(
-            child: Text(
-          "Loading...",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        )),
-      );
+        body:
+        Container(
+        color: Colors.white,
+        child: Center(
+          child: Loading(indicator: BallPulseIndicator(), size: 100.0,color: Colors.black),
+        ),
+      ), );
     }
   }
 
