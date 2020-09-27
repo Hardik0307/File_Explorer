@@ -61,7 +61,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/Barad7987"><img src="https://avatars1.githubusercontent.com/u/58905672?v=4" width="100px;" alt=""/><br /><sub><b>Barad7987</b></sub></a><br /><a href="https://github.com/Hardik0307/File_Explorer/commits?author=Barad7987" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Barad7987"><img src="https://avatars1.githubusercontent.com/u/58905672?v=4" width="100px;" alt=""/><br /><sub><b>Barad7987</b></sub></a><br /><a href="https://github.com/Hardik0307/File_Explorer/commits?author=Barad7987" title="Code">💻</a> <a href="#design-Barad7987" title="Design">🎨</a></td>
   </tr>
 </table>
 
