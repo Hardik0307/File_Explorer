@@ -1,7 +1,5 @@
 # File_Explorer
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 A try to build File Explorer Application on Dart's Flutter Framework
 
 ## Tips
@@ -50,22 +48,3 @@ A try to build File Explorer Application on Dart's Flutter Framework
 ### Download 
 - Swift File Manager Apk
 - <a href="https://github.com/Hardik0307/File_Explorer/releases/download/v1.1.1.1/Swift_File_Manager.apk">Just Click Here!</a>
-
-## Contributors ✨
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://github.com/Hardik0307"><img src="https://avatars3.githubusercontent.com/u/41434099?v=4" width="100px;" alt=""/><br /><sub><b>Hardik Bagada</b></sub></a><br /><a href="https://github.com/Hardik0307/File_Explorer/commits?author=Hardik0307" title="Documentation">📖</a> <a href="https://github.com/Hardik0307/File_Explorer/commits?author=Hardik0307" title="Code">💻</a></td>
-  </tr>
-</table>
-
-<!-- markdownlint-enable -->
-<!-- prettier-ignore-end -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
