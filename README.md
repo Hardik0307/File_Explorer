@@ -1,6 +1,6 @@
 # File_Explorer
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 A try to build File Explorer Application on Dart's Flutter Framework
@@ -63,6 +63,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/Hardik0307"><img src="https://avatars3.githubusercontent.com/u/41434099?v=4" width="100px;" alt=""/><br /><sub><b>Hardik Bagada</b></sub></a><br /><a href="https://github.com/Hardik0307/File_Explorer/commits?author=Hardik0307" title="Code">💻</a> <a href="https://github.com/Hardik0307/File_Explorer/commits?author=Hardik0307" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/Barad7987"><img src="https://avatars1.githubusercontent.com/u/58905672?v=4" width="100px;" alt=""/><br /><sub><b>Barad7987</b></sub></a><br /><a href="https://github.com/Hardik0307/File_Explorer/commits?author=Barad7987" title="Code">💻</a> <a href="#design-Barad7987" title="Design">🎨</a></td>
+    <td align="center"><a href="https://github.com/HarshadChovatiya"><img src="https://avatars2.githubusercontent.com/u/53139871?s=400&u=36613cd8d2b16ae8144e12f89a7854e9e4316531&v=4" width="100px;" alt=""/><br /><sub><b>HarshadChovatiya</b></sub></a><br /><a href="https://github.com/Hardik0307/File_Explorer/commits?author=HarshadChovatiya" title="Code">💻</a> <a href="#design-HarshadChovatiya" title="Design">🎨</a></td>
   </tr>
 </table>
 
